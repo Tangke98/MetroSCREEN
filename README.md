@@ -8,7 +8,7 @@ Cell identification in high-resolution Spatial Transcriptomics
 
 MetroSCREEN is a computational method to perform cell segmentation on high-resolution spatial transcriptomics (ST) data, including sequncing-based (e.g. Stereo-seq and Seq-Scope) and imaging-based (e.g. seqFISH+ and STARmap) technologies.
 
-![avatar](docs/_static/img/MetroSCREEN_workflow.png)
+![avatar](docs/_static/img/MetroSCREEN_framework.png)
 
 ## Change Log
 ### v0.0.1a
