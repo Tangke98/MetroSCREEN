@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Cellist'
+project = 'MetroSCREEN'
 copyright = '2024, Wang Lab at Tongji'
 author = 'Dongqing Sun'
 release = '1.0.0'
