@@ -1,22 +1,37 @@
-MetroSCREEN
+.. MetroSCREEN documentation master file, created by
+   sphinx-quickstart on Tue Apr 16 18:36:25 2024.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to MetroSCREEN's documentation!
 ===================================
 
-**MetroSCREEN** Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data.
-.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+|PyPI| |Docs|
 
-.. note::
+.. |PyPI| image:: https://img.shields.io/pypi/v/MetroSCREEN
+   :target: https://pypi.org/project/MetroSCREEN
+.. |PyPIDownloads| image:: https://pepy.tech/badge/MetroSCREEN
+.. |Docs| image:: https://readthedocs.org/projects/MetroSCREEN/badge/?version=latest
+   :target: https://MetroSCREEN.readthedocs.io
 
-   This project is under active development.
 
-Contents
---------
+Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data (**MetroSCREEN**), computational tool designed to deduce metabolic states (MetaModule function) and identify upstream extrinsic and intrinsic regulators (MetaRegulon function) that influence dysregulated metabolic reactions, utilizing either scRNA-seq or bulk data.
+
+.. image:: _static/img/MetroSCREEN_workflow.png
+   :width: 100%
+   :align: center
+
+.. include:: release_notes/1.0.0.rst
+
 
 .. toctree::
+   :maxdepth: 1
+   :hidden:
 
-   usage
-   api
+   installation
+   tutorials
+   release_notes/index
