@@ -27,7 +27,7 @@ pip install .
 ```
 
 ## Documentation
-For full installation and usage of MetroSCREEN, please refer to the [documentation](https://MetroSCREEN.readthedocs.io/en/latest/).
+For full installation and usage of MetroSCREEN, please refer to the [documentation](https://metroscreen-rtd-rutorial.readthedocs.io/en/latest/).
 
 ## Usage
 ```bash
