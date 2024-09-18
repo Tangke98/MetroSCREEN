@@ -1,23 +1,49 @@
-# MetroSCREEN
-Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data. 
+# Cellist
 
-MetroSCREEN is a computational tool designed to deduce metabolic states (MetaModule function) and identify upstream extrinsic and intrinsic regulators (MetaRegulon function) that influence dysregulated metabolic reactions, utilizing either scRNA-seq or bulk data.
-![截屏2024-09-15 下午5 31 46](https://github.com/user-attachments/assets/f2405183-677b-4f0e-97a7-0b6b39a656f4)
+![PyPI](https://img.shields.io/pypi/v/cellist)
+![Downloads](https://pepy.tech/badge/cellist)
+![Documentation Status](https://readthedocs.org/projects/cellist/badge/?version=latest)
 
-# Change Log
+Cell identification in high-resolution Spatial Transcriptomics
 
-# Install MetroSCREEN
+Cellist is a computational method to perform cell segmentation on high-resolution spatial transcriptomics (ST) data, including sequncing-based (e.g. Stereo-seq and Seq-Scope) and imaging-based (e.g. seqFISH+ and STARmap) technologies.
 
-# Documentation
-For full installation and usage of MetroSCREEN, please refer to the documentation.
-# Usage
+![avatar](docs/_static/img/Cellist_workflow.png)
 
-Template for the Read the Docs tutorial
-=======================================
+## Change Log
+### v0.0.1a
+* Build Cellist.
+### v1.0.0
+* Release Cellist.
 
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
 
-Read the tutorial here:
+## Install Cellist
+```bash
+git clone https://github.com/wanglabtongji/Cellist.git
+cd Cellist
+conda create -n Cellist python=3.10
+pip install -r requirements.txt
+pip install .
+```
 
-https://docs.readthedocs.io/en/stable/tutorial/
+## Documentation
+For full installation and usage of Cellist, please refer to the [documentation](https://cellist.readthedocs.io/en/latest/).
+
+## Usage
+```bash
+cellist --help
+usage: cellist [-h] [-v] {seg,align,watershed,impute} ...
+
+Cellist (Cell identification in high-resolution Spatial Transcriptomics) is a cell segmentation tool for high-resolution spatial transcriptomics.
+
+positional arguments:
+  {seg,align,watershed,impute}
+    seg                 Run Cellist segmentation on high-resolution spatial transcriptomics.
+    align               Refine alignment between image and spatial transcriptomics.
+    watershed           Run initial watershed segmentation on the staining image.
+    impute              Perform spatially-aware gene imputation within each cluster.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         Print version info.
+```
