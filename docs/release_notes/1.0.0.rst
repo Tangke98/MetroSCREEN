@@ -3,4 +3,4 @@
 
 .. rubric:: Feature
 
-- Release Cellist
+- Release MetroSCREEN
