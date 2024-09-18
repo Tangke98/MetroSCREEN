@@ -2,7 +2,7 @@ MetroSCREEN
 ===================================
 
 **MetroSCREEN** Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data.
-that creates recipes mixing random ingredients.
+.
 It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
 and offers a *simple* and *intuitive* API.
 
