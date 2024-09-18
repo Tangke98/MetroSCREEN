@@ -1,8 +1,48 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
-
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
 [project]
-name = "lumache"
-authors = [{name = "Graziella", email = "graziella@lumache"}]
-dynamic = ["version", "description"]
+requires-python = ">= 3.10"
+name = "Cellist"
+dynamic = ["version"]
+authors = [
+    {name = "Dongqing Sun", email = "Dongqingsun96@gmail.com"},
+]
+description = "Cellist (Cell identification in high-resolution Spatial Transcriptomics) is a cell segmentation tool for high-resolution spatial transcriptomics. "
+license = {text = "GPL-3.0"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics"
+]
+dependencies = [
+    "numpy >= 1.23.0",
+    "scikit-learn >= 1.3.1",
+    "scikit-misc >= 0.2.0",
+    "scikit-image >= 0.20.0",
+    "pandas == 1.5.3",
+    "scipy >= 1.9.1",
+    "matplotlib >= 3.7.3",
+    "seaborn >= 0.11.2",
+    "scanpy >= 1.9.4",
+    "h5py >= 3.8.0",
+    "tables >= 3.7.0",
+    "spateo-release == 1.0.2",
+    "pyvista == 0.42",
+    "leidenalg == 0.10.2",
+    "sklearn-ann",
+    "annoy"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "Cellist.VERSION"}
+
+[project.scripts]
+cellist = "Cellist:main"
