@@ -19,7 +19,8 @@ Welcome to MetroSCREEN's documentation!
    :target: https://MetroSCREEN.readthedocs.io
 
 
-Cell identification in high-resolution Spatial Transcriptomics (**MetroSCREEN**), computational method to perform cell segmentation on high-resolution spatial transcriptomics (ST) data, including sequncing-based (e.g. Stereo-seq and Seq-Scope) and imaging-based (e.g. seqFISH+ and STARmap) technologies.
+Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data(**MetroSCREEN**).
+MetroSCREEN is a computational tool designed to deduce metabolic states (MetaModule function) and identify upstream extrinsic and intrinsic regulators (MetaRegulon function) that influence dysregulated metabolic reactions, utilizing either scRNA-seq or bulk data.
 
 .. image:: _static/img/MetroSCREEN_framework.png
    :width: 100%
