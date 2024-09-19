@@ -4,7 +4,7 @@
    :language: bash
 
 
-NIH/3T3 (seqFISH+)
+MetaRegulon
 ------------------
 
 Here we demonstrate the application of Cellist on the imaging-based high-resolution platform. The NIH/3T3 seqFISH+ data was derived from the study of `Eng et al., Nature, 2019 <https://www.nature.com/articles/s41586-019-1049-y>`_, which profiles 10,000 genes in 7 field of views (FOVs) with auxiliary DAPI staining. Users can download the demo data from `here <https://github.com/wanglabtongji/Cellist/tree/main/test/seqFISH_NIH3T3>`_.
