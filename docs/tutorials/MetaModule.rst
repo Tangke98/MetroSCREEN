@@ -24,7 +24,7 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
    :width: 50%
    :align: center
 
-::
+.. code-block:: r
 
    ## Set the split with the cell type information
    Fibro.seurat$split=paste0(Fibro.seurat$F_cluster_annotation) 
@@ -56,7 +56,8 @@ The results of :bash:`make_metacell` will be stored in the :bash:`/fs/home/tangk
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 
 After obtaining the metacell object, users can analyze the metacells in a similar way as with single-cell expression data. If there is batch effect in the data, it is recommended to construct the metacells separately for each dataset, then combine the metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available here.
-::
+
+.. code-block:: r
 
    ## create Seurat object for metacell matrix
    metacell.seurat <- CreateSeuratObject(counts = metacell, project = "metacell", min.cells = 0, min.features = 0)
@@ -90,7 +91,7 @@ Step 2 Calculate the MetaModule score
 
 Calculate the MetaModule score using the :bash:`cal_MetaModule` function. Users can utilize the reactions and corresponding information provided by Recon3. Since some of this information is duplicated, users can use the simplified version provided by MetroSCREEN. Alternatively, users can manually create and use gene sets of interest.
 
-::
+.. code-block:: r
 
    ## MM: contains reaction lists of the genes
    MM=readRDS("/fs/home/tangke/metabolism/tool/data/MM.nodup.rds")
@@ -113,7 +114,7 @@ Calculate the MetaModule score using the :bash:`cal_MetaModule` function. Users 
 
 In this section, MetroSCREEN calculates the MetaModule score for each metacell. To identify differentially enriched MetaModules for each identity class in a dataset, the :bash`FindAllMarkers` function from Seurat will be used.
 
-::
+.. code-block:: r
 
    ## Calculate the MetaModule score
    cal_MetaModule(metacell,MM,'/fs/home/tangke/metabolism/tool/data/','fibro_new_metacell_gsva')
@@ -146,7 +147,7 @@ Step 3 MetaModule analysis
 
 With nucleus segmentation completed, the next step is to expand the nucleus labels to include the cytoplasm, namely, cell segmentation. In cellist, we take both expression similarity and spatial proximity into consideration when assigning non-nucleus spots to labelled nuclei. 
 
-::
+.. code-block:: r
 
    metacell.gsva.seurat@assays$RNA@scale.data=as.matrix(metacell.gsva.seurat@assays$RNA@counts)
    ## show the top 10 most enriched MetaModule for each cell type
@@ -162,7 +163,7 @@ With nucleus segmentation completed, the next step is to expand the nucleus labe
 
 In our fibroblast integration data, we found that CTHRC1+ CAFs showed higher MetaModule scores for chondroitin sulfate biosynthesis (HMR_7493 and HMR_7494). In this dataset, COL11A1+ CAFs exhibited a similar pattern.
 
-::
+.. code-block:: r
 
    doheatmap_feature(metacell.gsva.seurat,'cell_type',MM.meta[MM.meta$SUBSYSTEM=='Chondroitin / heparan sulfate biosynthesis','ID'],5,4, cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))
 
