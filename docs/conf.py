@@ -37,5 +37,5 @@ html_css_files = [
 
 nbsphinx_thumbnails = {
     "tutorials/MetaModule": "_static/img/thumbnail/Mouse_OB.png",
-    "tutorials/seqFISH": "_static/img/thumbnail/seqFISH.png"
+    "tutorials/test": "_static/img/thumbnail/seqFISH.png"
 }
