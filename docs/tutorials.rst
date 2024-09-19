@@ -4,10 +4,10 @@ Tutorials
 .. nbgallery::
 
    tutorials/MetaModule
-   tutorials/seqFISH
+   tutorials/MetaRegulon
 
 .. toctree::
    :hidden:
 
    tutorials/MetaModule.rst
-   tutorials/seqFISH.rst
+   tutorials/MetaRegulon.rst
