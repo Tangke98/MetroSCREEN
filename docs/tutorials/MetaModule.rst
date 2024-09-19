@@ -19,7 +19,7 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
    DimPlot(Fibro.seurat, reduction = "umap",group.by='F_cluster_annotation',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))
 
 .. image:: ../_static/img/MetroSCREEN_cell_annotation.png
-   :width: 50%
+   :width: 100%
    :align: center
 
 ::
