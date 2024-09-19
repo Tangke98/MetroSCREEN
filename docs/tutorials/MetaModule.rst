@@ -32,7 +32,7 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
    metacell<-readRDS('/fs/home/tangke/metabolism/tool/data/fibro_new_metacell.rds')
    head(metacell)
 
-.. image:: ../_static/img/MetroSCREEN_cell_annotation.png
+.. image:: ../_static/img/MetroSCREEN_metacell_info.png
    :width: 50%
    :align: center
 
