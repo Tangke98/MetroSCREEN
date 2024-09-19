@@ -24,13 +24,15 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
 
 ::
 
-   ## set the split with the cell type information
+   ## Set the split with the cell type information
    Fibro.seurat$split=paste0(Fibro.seurat$F_cluster_annotation) 
-   ## construct the metacell
+   ## Construct the metacell
    make_metacell(Fibro.seurat,'split',10,'/fs/home/tangke/metabolism/tool/data/','fibro_new_metacell') 
    ## metacell object can be read
    metacell<-readRDS('/fs/home/tangke/metabolism/tool/data/fibro_new_metacell.rds')
-   head(metacell)
+   ## The rows of the metacell are the genes, while the columns of the metacell are the cell type information. 
+   ## The detailed cell information in a metacell was saved in fibro_new_metacell_info.rds
+   metacell[1:3,1:6]
 
 .. image:: ../_static/img/MetroSCREEN_metacell_info.png
    :width: 100%
@@ -58,7 +60,7 @@ After obtaining the metacell object, users can analyze the metacells in a simila
    options(repr.plot.width = 6, repr.plot.height = 5,repr.plot.res = 100)
    DimPlot(metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("Minicluster cell type")
 
-.. image:: ../_static/img/MetroSCREEN_cell_annotation_minicluster.png
+.. image:: ../_static/img/MetroSCREEN_cell_annotation_metacell.png
    :width: 50%
    :align: center
 
