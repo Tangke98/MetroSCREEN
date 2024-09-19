@@ -3,9 +3,10 @@
 .. role:: bash(code)
    :language: bash
 
-MetaModule(calculate the reaction which enriched in each metacell)
+MetaModule
 ---------------------------------
 
+Calculate the reaction which enriched in each metacell.
 Here we use a well annotated dataset to demonstrate the usage of the MetaModule function of MetroSCREEN. The original study provide the gene expression and cell annotation. Users can download the data and the information from `here <https://github.com/wanglabtongji/Cellist/tree/main/test/Stereoseq_Mouse_OB>`_.
 
 Step 1 Prepare the metacell
