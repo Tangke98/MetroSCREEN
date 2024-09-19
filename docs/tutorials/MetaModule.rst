@@ -34,7 +34,6 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
    metacell<-readRDS('/fs/home/tangke/metabolism/tool/data/fibro_new_metacell.rds')
 
    ## The rows of the metacell are the genes, while the columns of the metacell are the cell type information. 
-   ## The detailed cell information in a metacell was saved in fibro_new_metacell_info.rds
    metacell[1:3,1:6]
 
    # COL11A1+ CAF|2|1	COL11A1+ CAF|2|2	COL11A1+ CAF|2|3	COL11A1+ CAF|2|4	COL11A1+ CAF|2|5	COL11A1+ CAF|2|6
@@ -42,26 +41,16 @@ To mitigate the impact of technical noise and increase gene coverage, MetroSCREE
    # A1BG-AS1	0.000000	0.000000	0.000000	0.000000	0.4486995	0.000000
    # A2M	1.658391	1.232226	2.295417	3.266894	2.6936025	3.799514
 
-The results of :bash:`seg` will be stored in the :bash:`Result/Cellist` floder, and the detailed descritions are shown as below.
+The results of :bash:`make_metacell` will be stored in the :bash:`/fs/home/tangke/metabolism/tool/data/` floder, and the detailed information are shown as below.
 
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 | File                                          | Description                                                                   |
 +===============================================+===============================================================================+
-| Data_HVG/                                     | The directory stores small patches cropped from the slide.                    |
+| /fs/home/tangke/metabolism/tool/data/         | The directory stores make_metacell output files.                              |
 +-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation.txt                  | The spot-level cell segmentation result where each row represents a spot.     |
+| {outprefix}.rds                               | The metacell expression matrix.                                               |
 +-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_cell_count.h5        | The aggrefated cell-level expression matrix, stored in the format of h5,      |
-|                                               | where each row represents a gene and each column represents a cell.           |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_cell_coord.txt       | The spatial coordinates of the segmented cells, which correspond to the cells |
-|                                               | in the above expression file.                                                 |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_plot.pdf             | Visualization of the cell segmentation results.                               |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_cellist_corr_nucl_cyto_df.txt     | The correlation of expression between nucleus and cytoplasm within each cell. |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| parameters.json                               | Parameters to run :bash:`cellist` and statistics of the segmentation results. |
+| {outprefix}_info.rds                          | The detailed cell information in a metacell.                                  |
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 
 After obtaining the metacell object, users can analyze the metacells in a similar way as with single-cell expression data. If there is batch effect in the data, it is recommended to construct the metacells separately for each dataset, then combine the metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available here.
@@ -148,27 +137,7 @@ In this section, MetroSCREEN calculates the MetaModule score for each metacell. 
    # HMR-8559	2.857953e-41	1.2123590	0.917	0.224	4.484128e-38	ADH1B+ CAF	HMR-8559  	Eicosanoid metabolism	prostaglandin D2[r] <=> prostaglandin H2[r]                                                                      
    # HMR-9514	3.597369e-36	0.7508997	0.906	0.338	5.644273e-33	ADH1B+ CAF	HMR-9514  	Isolated             	NADPH[c] + O2[c] + trimethylamine[c] => H2O[c] + NADP+[c] + trimethylamine-N-oxide[c]                    
 
-The results of :bash:`seg` will be stored in the :bash:`Result/Cellist` floder, and the detailed descritions are shown as below.
-
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| File                                          | Description                                                                   |
-+===============================================+===============================================================================+
-| Data_HVG/                                     | The directory stores small patches cropped from the slide.                    |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation.txt                  | The spot-level cell segmentation result where each row represents a spot.     |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_cell_count.h5        | The aggrefated cell-level expression matrix, stored in the format of h5,      |
-|                                               | where each row represents a gene and each column represents a cell.           |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_cell_coord.txt       | The spatial coordinates of the segmented cells, which correspond to the cells |
-|                                               | in the above expression file.                                                 |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_segmentation_plot.pdf             | Visualization of the cell segmentation results.                               |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| {outprefix}_cellist_corr_nucl_cyto_df.txt     | The correlation of expression between nucleus and cytoplasm within each cell. |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
-| parameters.json                               | Parameters to run :bash:`cellist` and statistics of the segmentation results. |
-+-----------------------------------------------+-------------------------------------------------------------------------------+
+The results of :bash:`cal_MetaModule` will be stored in the :bash:`/fs/home/tangke/metabolism/tool/data/` floder, and the detailed descritions are shown as below.
 
 Step 3 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -199,4 +168,4 @@ In our fibroblast integration data, we found that CTHRC1+ CAFs showed higher Met
    :width: 50%
    :align: center
 
-Users can explore the MetaModule score of the metacell like the gene expression of single cell.
+Users can explore the MetaModule score of metacells in a similar way to exploring gene expression in single cells.
