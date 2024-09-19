@@ -66,18 +66,19 @@ After obtaining the metacell object, users can analyze the metacells in a simila
 
 
 
-Step 2 Watershed segmentation of nucleus
+Step 2 calculate the MetaModule score
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-The initial nucleus segmentation is required for refined cell segmentation by Cellist. In Cellist, we utilize the watershed algorithm to segment nuclei in the ssDNA image, which is implemented by the function of :bash:`watershed`. 
+Calculate the MetaModule score using the :bash:`cal_MetaModule` function. Users can utilize the reactions and corresponding information provided by Recon3. Since some of this information is duplicated, users can use the simplified version provided by MetroSCREEN. Alternatively, users can manually create and use gene sets of interest.
 
 ::
 
-   cellist watershed --gem Data/DP8400013846TR_F5.bin1.olfactorybulb_cropped.gem \
-   --tif Result/Alignment/DP8400013846TR_F5_regist_transposed_aligned_by_Spateo.tiff \
-   --min-distance 6 \
-   --outdir Result/Watershed \
-   --outprefix DP8400013846TR_F5
+   ## MM: contains reaction lists of the genes
+   MM=readRDS("/fs/home/tangke/metabolism/tool/data/MM.nodup.rds")
+   ## MM.meta: metabolic information of these reacrions
+   MM.meta=readRDS("/fs/home/tangke/metabolism/tool/data/MM.meta.rds") %>%
+         as.data.frame()
+   rownames(MM.meta)=MM.meta$ID
 
 .. image:: ../_static/img/DP8400013846TR_F5_cell_boundary.png
    :width: 100%
