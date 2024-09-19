@@ -36,6 +36,6 @@ html_css_files = [
 # html_logo = "_static/img/MetroSCREEN_logo_blue_px.png"
 
 nbsphinx_thumbnails = {
-    "tutorials/MetaModule": "_static/img/thumbnail/Mouse_OB.png",
-    "tutorials/test": "_static/img/thumbnail/seqFISH.png"
+    "tutorials/MetaModule": "_static/img/thumbnail/MetaModule.png",
+    "tutorials/MetaRegulon": "_static/img/thumbnail/MetaRegulon.png"
 }
