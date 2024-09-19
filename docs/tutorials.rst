@@ -3,11 +3,11 @@ Tutorials
 
 .. nbgallery::
 
-   tutorials/Stereo-seq
+   tutorials/MetaModule
    tutorials/seqFISH
 
 .. toctree::
    :hidden:
 
-   tutorials/Stereo-seq.rst
+   tutorials/MetaModule.rst
    tutorials/seqFISH.rst
