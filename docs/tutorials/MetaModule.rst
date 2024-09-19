@@ -198,3 +198,5 @@ In our fibroblast integration data, we found that CTHRC1+ CAFs showed higher Met
 .. image:: ../_static/img/MetroSCREEN_chondritin.png
    :width: 50%
    :align: center
+
+Users can explore the MetaModule score of the metacell like the gene expression of single cell.
