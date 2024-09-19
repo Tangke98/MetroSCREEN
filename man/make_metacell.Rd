@@ -9,9 +9,9 @@ make_metacell(object, feature, number, output_path, file_name)
 \arguments{
 \item{object}{Seurat object}
 
-\item{feature}{Feature used to cluster cells}
+\item{feature}{Feature used to cluster cells, usually use the colnames of the meta.data of the seurat object}
 
-\item{number}{Number used to cluster cells}
+\item{number}{Number used to cluster cells, depending on your total number of cells, a recommended range for clustering cells is between 10 and 50}
 
 \item{output_path}{Path to save the metacell result}
 

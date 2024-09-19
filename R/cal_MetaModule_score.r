@@ -4,6 +4,7 @@
 #' @param module_list Reaction list or interested gene sets.
 #' @param output_path Path to save the MetaModule score result.
 #' @param file_name File name of the MetaModule score result.
+#  @export
 
 cal_MetaModule=function(object,module_list,output_path,file_name){
     if (ncol(object)>2000){
