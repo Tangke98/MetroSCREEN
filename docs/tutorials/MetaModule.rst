@@ -3,26 +3,66 @@
 .. role:: bash(code)
    :language: bash
 
-Mouse olfactory bulb (Stereo-seq)
+MetaModule(calculate the reaction which enriched in each metacell)
 ---------------------------------
 
-Here we use a mouse olfactory bulb dataset profiled by Stereo-seq (`Chen et al., Cell, 2022 <https://www.sciencedirect.com/science/article/pii/S0092867422003993>`_) to demonstrate the usage of Cellist. The original study provides spatial expression and a corresponding ssDNA staining image. Users can download the processed data from `here <https://github.com/wanglabtongji/Cellist/tree/main/test/Stereoseq_Mouse_OB>`_.
+Here we use a well annotated dataset to demonstrate the usage of the MetaModule function of MetroSCREEN. The original study provide the gene expression and cell annotation. Users can download the data and the information from `here <https://github.com/wanglabtongji/Cellist/tree/main/test/Stereoseq_Mouse_OB>`_.
 
-Step 1 Registration between staining and spatial expression profile
+Step 1 prepare the metacell
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-While the images are initially aligned with RNA coordinates, minor misalignments may still occur. The :bash:`align` function could be used to refine the alignment, which integrates the :bash:`refine_alignment` function with the rigid mode in `Spateo <https://spateo-release.readthedocs.io/en/latest/technicals/cell_segmentation.html#alignment-of-stain-and-rna-coordinates>`_. 
+To mitigate the impact of technical noise and increase gene coverage, MetroSCREEN adopts a metacell strategy using :bash:`make_metacell` function. Detailed information about metacells can be found `here`. The number of cells in a metacell depends on the total number of cells. If the total exceeds 3000, the recommended number of cells per metacell is 30. For smaller cell populations, users can set a lower number of cells per metacell, but it should not be less than 10.
+::
+   
+   Fibro.seurat <- readRDS('/fs/home/tangke/metabolism/tool/data/fibro_new.rds')
+   options(repr.plot.width = 7, repr.plot.height = 5,repr.plot.res = 100)
+   DimPlot(Fibro.seurat, reduction = "umap",group.by='F_cluster_annotation',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))
+
+.. image:: ../_static/img/MetroSCREEN_cell_annotation.png
+   :width: 50%
+   :align: center
+
 ::
 
-   cellist align --gem Data/DP8400013846TR_F5.bin1.olfactorybulb_cropped.gem \
-   --tif Data/ssDNA_cropped_3625_9545_950_5630.tiff \
-   --nworkers 8 \
-   --outdir Result/Alignment \
-   --outprefix DP8400013846TR_F5
+   ## set the split with the cell type information
+   Fibro.seurat$split=paste0(Fibro.seurat$F_cluster_annotation) 
+   ## construct the metacell
+   make_metacell(Fibro.seurat,'split',10,'/fs/home/tangke/metabolism/tool/data/','fibro_new_metacell') 
+   ## metacell object can be read
+   metacell<-readRDS('/fs/home/tangke/metabolism/tool/data/fibro_new_metacell.rds')
+   head(metacell)
 
-.. image:: ../_static/img/DP8400013846TR_F5_alignment_compare.png
-   :width: 100%
+.. image:: ../_static/img/MetroSCREEN_cell_annotation.png
+   :width: 50%
    :align: center
+
+
+
+After obtaining the metacell object, users can analyze the metacells in a similar way as with single-cell expression data. If there is batch effect in the data, it is recommended to construct the metacells separately for each dataset, then combine the metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available here.
+::
+
+   ## create Seurat object for metacell matrix
+   metacell.seurat <- CreateSeuratObject(counts = metacell, project = "metacell", min.cells = 0, min.features = 0)
+   ## Normalize data
+   metacell.seurat <- NormalizeData(metacell.seurat)
+   ## Find variable features
+   metacell.seurat <- FindVariableFeatures(metacell.seurat, selection.method = "vst", nfeatures = 2000)
+   metacell.seurat <- ScaleData(metacell.seurat)
+   ## Set the cell type information for Seurat object
+   metacell.seurat@meta.data$cell_type=sapply(strsplit(rownames(metacell.seurat@meta.data),"[|]"), 
+                                function(x) x[1])
+   metacell.seurat <- RunPCA(metacell.seurat)        
+   metacell.seurat <- RunUMAP(metacell.seurat, dims = 1:10)
+   metacell.seurat <- FindNeighbors(metacell.seurat, dims = 1:10)
+   metacell.seurat <- FindClusters(metacell.seurat, resolution = 0.6)
+   options(repr.plot.width = 6, repr.plot.height = 5,repr.plot.res = 100)
+   DimPlot(metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("Minicluster cell type")
+
+.. image:: ../_static/img/MetroSCREEN_cell_annotation_minicluster.png
+   :width: 50%
+   :align: center
+
+
 
 Step 2 Watershed segmentation of nucleus
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
