@@ -1,0 +1,41 @@
+package:
+  name: MetroSCREEN
+  version: "0.1.0"
+
+source:
+  path: /fs/home/tangke/metabolism/tool/MetroSCREEN
+
+build:
+  number: 0
+  preserve_egg_dir: True
+
+requirements:
+  build:
+    - r-base
+    - r-devtools
+  host:
+    - r-base
+    - r-roxygen2
+  run:
+    - r-base
+    - bioconductor-gsva>=1.42.0
+    - r-dplyr>=1.0.9
+    - r-tidyr>=1.2.0
+    - r-ggplot2>=3.3.6
+    - r-ggpubr>=0.4.0
+    - bioconductor-limma>=3.50.1
+    - r-igraph>=1.3.2
+    - r-harmony>=1.2.0
+    - r-seurat>=4.3.0
+    - bioconductor-gsva>=1.42.0
+    - bioconductor-complexheatmap>=2.10.0
+    - r-rcolorbrewer>=1.1_3
+    - r-rpref>=1.3
+    - r-igraph>=1.6.0
+    - r-robustrankaggreg>=1.2
+
+about:
+  home: https://github.com/Tangke98/MetroSCREEN
+  summary: Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data.
+  doc_url: https://metroscreen-rtd-rutorial.readthedocs.io/en/latest/
+  dev_url: https://github.com/Tangke98/MetroSCREEN

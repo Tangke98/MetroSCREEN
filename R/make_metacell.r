@@ -140,7 +140,7 @@ Generate_DiffCell_minicluster_for_Seurat<-function(Seurat_obj,CellNumber){
 #' @param output_path Path to save the metacell result
 #' @param file_name File name of the metacell result
 
-#  @export
+#' @export
 make_metacell=function(object, feature, number, output_path,file_name){
     metacell=paste0(output_path,file_name,'.rds')
     metacell_info=paste0(output_path,file_name,'_info.rds')

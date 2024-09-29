@@ -3,11 +3,11 @@ Tutorials
 
 .. nbgallery::
 
-   tutorials/MetaModule
-   tutorials/MetaRegulon
+   tutorials/scRNA-seq
+   tutorials/RNA-seq
 
 .. toctree::
    :hidden:
 
-   tutorials/MetaModule.rst
-   tutorials/MetaRegulon.rst
+   tutorials/scRNA-seq.rst
+   tutorials/RNA-seq.rst
