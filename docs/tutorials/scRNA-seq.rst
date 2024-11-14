@@ -5,7 +5,6 @@
 
 MetroSCREEN(scRNA-seq)
 ---------------------------------
-<<<<<<< HEAD
 For single-cell data, to mitigate the impact of technical noise and increase gene coverage, MetroSCREEN adopts a Metacell strategy similar to `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. MetroSCREEN calculates the MetaModule score for each Metacell and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon for the MetaModule.
 
 To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk scRNA-seq data, we downloaded the dataset from `here <https://zenodo.org/records/8227625>`_.
@@ -14,16 +13,6 @@ Step 1 Prepare the Metacell
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 MetroSCREEN adopts a Metacell strategy using :bash:`make_Metacell` function. The number of cells in a Metacell depends on the total number of cells. If the total exceeds 3000, the recommended number of cells per Metacell is 30. For smaller cell populations, users can set a lower number of cells per Metacell, but it better not be less than 10.
-=======
-For single-cell data, to mitigate the impact of technical noise and increase gene coverage, MetroSCREEN adopts a metacell strategy similar to `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. MetroSCREEN calculates the MetaModule score for each metacell and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon.
-
-To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk scRNA-seq data, we downloaded the dataset from `here <https://zenodo.org/records/8227625>`_.
-
-Step 1 Prepare the metacell
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-MetroSCREEN adopts a metacell strategy using :bash:`make_metacell` function. The number of cells in a metacell depends on the total number of cells. If the total exceeds 3000, the recommended number of cells per metacell is 30. For smaller cell populations, users can set a lower number of cells per metacell, but it better not be less than 10.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. code-block:: r
 
@@ -42,7 +31,6 @@ MetroSCREEN adopts a metacell strategy using :bash:`make_metacell` function. The
    ## Set the split with the cell subtypes information
    Fibro.seurat$split=paste0(Fibro.seurat$F_cluster_annotation) 
 
-<<<<<<< HEAD
    ## Construct the Metacell
    make_Metacell(Fibro.seurat,'split',10,'./scRNA/','fibro_new_Metacell') 
 
@@ -51,57 +39,30 @@ MetroSCREEN adopts a metacell strategy using :bash:`make_metacell` function. The
 
    ## The rows of the Metacell are the genes, while the columns of the Metacell are the cell subtypes information. 
    Metacell[1:3,1:6]
-=======
-   ## Construct the metacell
-   make_metacell(Fibro.seurat,'split',10,'./scRNA/','fibro_new_metacell') 
-
-   ## metacell object can be read
-   metacell<-readRDS('./scRNA/fibro_new_metacell.rds')
-
-   ## The rows of the metacell are the genes, while the columns of the metacell are the cell subtypes information. 
-   metacell[1:3,1:6]
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
    # COL11A1+ CAF|2|1	COL11A1+ CAF|2|2	COL11A1+ CAF|2|3	COL11A1+ CAF|2|4	COL11A1+ CAF|2|5	COL11A1+ CAF|2|6
    # A1BG	0.000000	0.000000	0.000000	0.000000	0.0000000	0.000000
    # A1BG-AS1	0.000000	0.000000	0.000000	0.000000	0.4486995	0.000000
    # A2M	1.658391	1.232226	2.295417	3.266894	2.6936025	3.799514
 
-<<<<<<< HEAD
 The results of :bash:`make_Metacell` will be stored in the :bash:`./scRNA/ ` floder, and the detailed information are shown as below.
-=======
-The results of :bash:`make_metacell` will be stored in the :bash:`./scRNA/ ` floder, and the detailed information are shown as below.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 | File                                          | Description                                                                   |
 +===============================================+===============================================================================+
-<<<<<<< HEAD
 | ./scRNA/                                      | The directory stores make_Metacell output files.                              |
-=======
-| ./scRNA/                                      | The directory stores make_metacell output files.                              |
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 | {outprefix}.rds                               | The Metacell expression matrix.                                               |
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 | {outprefix}_info.rds                          | The detailed cell information in a Metacell.                                  |
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 
-<<<<<<< HEAD
 After obtaining the Metacell object, users can analyze the Metacells expression data in a similar way as with single-cell expression data. 
 
 .. code-block:: r
 
    ## Create Seurat object for Metacell expression matrix
    Metacell.seurat <- CreateSeuratObject(counts = Metacell, project = "Metacell", min.cells = 0, min.features = 0)
-=======
-After obtaining the metacell object, users can analyze the metacells expression data in a similar way as with single-cell expression data. 
-
-.. code-block:: r
-
-   ## Create Seurat object for metacell expression matrix
-   metacell.seurat <- CreateSeuratObject(counts = metacell, project = "metacell", min.cells = 0, min.features = 0)
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
    ## Normalize data
    Metacell.seurat <- NormalizeData(Metacell.seurat)
@@ -109,15 +70,9 @@ After obtaining the metacell object, users can analyze the metacells expression 
    ## Find variable features
    Metacell.seurat <- FindVariableFeatures(Metacell.seurat, selection.method = "vst", nfeatures = 2000)
 
-<<<<<<< HEAD
    Metacell.seurat <- ScaleData(Metacell.seurat)
    ## Set the cell subtypes information for seurat object
    Metacell.seurat@meta.data$cell_type=sapply(strsplit(rownames(Metacell.seurat@meta.data),"[|]"), 
-=======
-   metacell.seurat <- ScaleData(metacell.seurat)
-   ## Set the cell subtypes information for seurat object
-   metacell.seurat@meta.data$cell_type=sapply(strsplit(rownames(metacell.seurat@meta.data),"[|]"), 
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
                                 function(x) x[1])
    Metacell.seurat <- RunPCA(Metacell.seurat)        
    Metacell.seurat <- RunUMAP(Metacell.seurat, dims = 1:10)
@@ -125,21 +80,13 @@ After obtaining the metacell object, users can analyze the metacells expression 
    Metacell.seurat <- FindClusters(Metacell.seurat, resolution = 0.6)
    options(repr.plot.width = 6, repr.plot.height = 5,repr.plot.res = 100)
 
-<<<<<<< HEAD
    DimPlot(Metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("Metacell cell subtype")
-=======
-   DimPlot(metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("metacell cell type")
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. image:: ../_static/img/MetroSCREEN_cell_annotation_Metacell.png
    :width: 50%
    :align: center
 
-<<<<<<< HEAD
 If there is a batch effect in the data, it is recommended to construct the Metacells separately for each dataset, and then combine the Metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
-=======
-If there is a batch effect in the data, it is recommended to construct the metacells separately for each dataset, and then combine the metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 Step 2 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -148,11 +95,7 @@ Step 2 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
 Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest.
-=======
-Here we utilized the metabolic reactions and corresponding information provided by `Recon3 <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here 修改`_. Alternatively, users can manually create and use gene sets of interest.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. code-block:: r
 
@@ -178,27 +121,17 @@ Here we utilized the metabolic reactions and corresponding information provided 
 2. Calculate the MetaModule score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
 In this section, MetroSCREEN calculates the MetaModule score for each Metacell by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtypes in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
-=======
-In this section, MetroSCREEN calculates the MetaModule score for each metacell by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtypes in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. code-block:: r
 
    ## Calculate the MetaModule score
-<<<<<<< HEAD
    cal_MetaModule(Metacell,MM,'./scRNA/','fibro_new_Metacell_gsva')
    Metacell.gsva=readRDS("./scRNA/fibro_new_Metacell_gsva.rds")
-=======
-   cal_MetaModule(metacell,MM,'./scRNA/','fibro_new_metacell_gsva')
-   metacell.gsva=readRDS("./scRNA/fibro_new_metacell_gsva.rds")
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 3.  MetaModule score exploration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-<<<<<<< HEAD
 
 .. code-block:: r
 
@@ -208,19 +141,6 @@ In this section, MetroSCREEN calculates the MetaModule score for each metacell b
 
    ## Find the differentially enriched MetaModule for each cell subtype in a dataset
    MetaModule.markers=FindAllMarkers_MetaModule(Metacell.gsva,sample_info,'scRNA')  
-=======
-
-After the MetaModule calculation, users can explore the MetaModule score. To identify differentially enriched MetaModules for each cell subtype, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_. 
-
-.. code-block:: r
-
-   ## Construct the metacell information
-   sample_info=as.factor(metacell.seurat$cell_type)
-   names(sample_info)=colnames(metacell.seurat)
-
-   ## Find the differentially enriched MetaModule for each cell subtype in a dataset
-   MetaModule.markers=FindAllMarkers_MetaModule(metacell.gsva,sample_info,'scRNA')  
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    MetaModule.markers=MetaModule.markers[MetaModule.markers$p_val_adj<0.05,]
 
    ## Add metabolic information for the differentially enriched MetaModule
@@ -235,21 +155,13 @@ After the MetaModule calculation, users can explore the MetaModule score. To ide
    # HMR-8559	2.857953e-41	1.2123590	0.917	0.224	4.484128e-38	ADH1B+ CAF	HMR-8559  	Eicosanoid metabolism	prostaglandin D2[r] <=> prostaglandin H2[r]                                                                      
    # HMR-9514	3.597369e-36	0.7508997	0.906	0.338	5.644273e-33	ADH1B+ CAF	HMR-9514  	Isolated             	NADPH[c] + O2[c] + trimethylamine[c] => H2O[c] + NADP+[c] + trimethylamine-N-oxide[c]                    
 
-<<<<<<< HEAD
    saveRDS(MetaModule.markers,'./scRNA/fibro_new_Metacell_gsva_markers.rds')
-=======
-   saveRDS(MetaModule.markers,'./scRNA/fibro_new_metacell_gsva_markers.rds')
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 4. Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
 Here, we give two examples for the following analysis, users can also explore more by add the MetaModule score to the :bash:`meta.data` slot of the :bash:`Metacell.seurat` object.
-=======
-Here, we give two examples for the following analysis, users can also explore more by add the MetaModule score to the :bash:`meta.data` slot of the :bash:`metacell.seurat` object.
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. code-block:: r
 
@@ -289,21 +201,12 @@ Find the marker genes for each cell subtype, this is the basis for MetaRegulon a
 
 .. code-block:: r
 
-<<<<<<< HEAD
    ## Find the marker genes for each cell subtype of the Metacell object
    Metacell.seurat<-readRDS('./scRNA/fibro_new_Metacell_seurat.rds')
    Metacell.seurat.markers <- FindAllMarkers(Metacell.seurat, only.pos = TRUE)
    Metacell.seurat.markers=Metacell.seurat.markers[Metacell.seurat.markers$p_val_adj<0.05,]
    Metacell.seurat.markers=Metacell.seurat.markers[order(Metacell.seurat.markers$avg_log2FC,decreasing = TRUE),]
    saveRDS(Metacell.seurat.markers,'./scRNA/fibro_new_Metacell_gene_markers.rds')
-=======
-   ## Find the marker genes for each cell subtype of the metacell object
-   metacell.seurat<-readRDS('./scRNA/fibro_new_metacell_seurat.rds')
-   metacell.seurat.markers <- FindAllMarkers(metacell.seurat, only.pos = TRUE)
-   metacell.seurat.markers=metacell.seurat.markers[metacell.seurat.markers$p_val_adj<0.05,]
-   metacell.seurat.markers=metacell.seurat.markers[order(metacell.seurat.markers$avg_log2FC,decreasing = TRUE),]
-   saveRDS(metacell.seurat.markers,'./scRNA/fibro_new_metacell_gene_markers.rds')
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 Prepare the Lisa results for each group. This is the basis for MetaRegulon TR activity calculation. Users can known more about Lisa `here <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6>`_.
 
@@ -351,42 +254,25 @@ The fourth step involves inferring causation between the MetaModule and MetaRegu
       as.data.frame()
    rownames(MM.meta)=MM.meta$ID
 
-<<<<<<< HEAD
    MetaModule.markers<-readRDS('./scRNA/fibro_new_Metacell_gsva_markers.rds')
    Metacell.seurat<-readRDS('./scRNA/fibro_new_Metacell_seurat.rds')
    Metacell.seurat.markers<-readRDS('./scRNA/fibro_new_Metacell_gene_markers.rds')
 
    ## set the parameters
    object=Metacell.seurat
-=======
-   MetaModule.markers<-readRDS('./scRNA/fibro_new_metacell_gsva_markers.rds')
-   metacell.seurat<-readRDS('./scRNA/fibro_new_metacell_seurat.rds')
-   metacell.seurat.markers<-readRDS('./scRNA/fibro_new_metacell_gene_markers.rds')
-
-   ## set the parameters
-   object=metacell.seurat
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    feature='cell_type'
    state='COL11A1+ CAF'
    ## Users can use the differentially enriched MetaModule
    # interested_MM=MetaModule.markers[MetaModule.markers$cluster=='COL11A1+ CAF','gene']
    interested_MM=c('HMR-7493','HMR-7494')
    MM_list=MM
-<<<<<<< HEAD
    markers=Metacell.seurat.markers
-=======
-   markers=metacell.seurat.markers
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    lisa_file='./scRNA/lisa/COL11A1+ CAF:marker.txt.lisa.tsv'
    ligand_target_matrix='./ref/ligand_target_matrix.rds'
    lr_network='./ref/lr_network.rds'
    sample_tech='scRNA'
    output_path='./scRNA/'
-<<<<<<< HEAD
    RP_score='./ref/RP_score.rds'
-=======
-   RP_path='/fs/data/cistrome/RP/'
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    file_name='COL11A1_CAF'
 
 Calculate the MetaRegulon score
@@ -402,15 +288,9 @@ The results of :bash:`cal_MetaRegulon` will be stored in the :bash:`./scRNA/COL1
 +===============================================+===================================================================================+
 | {file_name}.rds                               | The expression matrix of the state.                                               |
 +-----------------------------------------------+-----------------------------------------------------------------------------------+
-<<<<<<< HEAD
 | {file_name}:lr_activity.rds                   | The ligands activity for each Metacell.                                           |
 +-----------------------------------------------+-----------------------------------------------------------------------------------+
 | {file_name}:tr_activity.rds                   | The transcriptional regulators activity for each Metacell.                        |
-=======
-| {file_name}:lr_activity.rds                   | The ligands activity for each metacell.                                           |
-+-----------------------------------------------+-----------------------------------------------------------------------------------+
-| {file_name}:tr_activity.rds                   | The transcriptional regulators activity for each metacell.                        |
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 +-----------------------------------------------+-----------------------------------------------------------------------------------+
 | {file_name}:gg_activity_cor.rds               | The correlation of intrinsic signaling components activity with MetaModule.       |
 +-----------------------------------------------+-----------------------------------------------------------------------------------+
@@ -424,10 +304,7 @@ The results of :bash:`cal_MetaRegulon` will be stored in the :bash:`./scRNA/COL1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 3. Downstream analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-<<<<<<< HEAD
 
-=======
->>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 Resources of the MetaRegulon.
 
 .. code-block:: r
