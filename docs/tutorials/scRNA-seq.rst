@@ -82,7 +82,7 @@ After obtaining the Metacell object, users can analyze the Metacells expression 
 
    DimPlot(Metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("Metacell cell subtype")
 
-.. image:: ../_static/img/MetroSCREEN_cell_annotation_Metacell.png
+.. image:: ../_static/img/MetroSCREEN_cell_annotation_metacell.png
    :width: 50%
    :align: center
 
