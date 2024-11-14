@@ -8,7 +8,7 @@ MetroSCREEN(RNA-seq)
 
 For bulk RNA-seq data, MetroSCREEN calculates the MetaModule score for each sample and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the source of the MetaRegulon. Considering that several samples are not suitable to infer the causation between MetaModule and MetaRegulon, the direction for bulk RNA-seq data is not provided. 
 
-To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk scRNA-seq data, we downloaded the dataset from `here <https://zenodo.org/records/8227625>`_.
+To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk RNA-seq data, we downloaded the dataset from `here <https://zenodo.org/uploads/14160398>`_.
 
 Step 1 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
