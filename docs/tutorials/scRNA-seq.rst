@@ -45,7 +45,7 @@ MetroSCREEN adopts a Metacell strategy using :bash:`make_Metacell` function. The
    # A1BG-AS1	0.000000	0.000000	0.000000	0.000000	0.4486995	0.000000
    # A2M	1.658391	1.232226	2.295417	3.266894	2.6936025	3.799514
 
-The results of :bash:`make_Metacell` will be stored in the :bash:`./scRNA/ ` floder, and the detailed information are shown as below.
+The results of :bash:`make_Metacell` will be stored in the :bash:`./scRNA/` floder, and the detailed information are shown as below.
 
 +-----------------------------------------------+-------------------------------------------------------------------------------+
 | File                                          | Description                                                                   |
