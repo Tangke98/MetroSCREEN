@@ -2,21 +2,21 @@
 % Please edit documentation in R/make_metacell.r
 \name{make_metacell}
 \alias{make_metacell}
-\title{Grouped single cell into small clusters (referred to as metacell) using KNN graph partitions.}
+\title{Grouped single cell into small clusters (referred to as Metacell) using KNN graph partitions.}
 \usage{
 make_metacell(object, feature, number, output_path, file_name)
 }
 \arguments{
 \item{object}{Seurat object}
 
-\item{feature}{Feature used to cluster cells, usually use the colnames of the meta.data of the seurat object}
+\item{feature}{Feature used to cluster cells, usually choose the colnames from the meta.data of the Seurat object}
 
-\item{number}{Number used to cluster cells, depending on your total number of cells, a recommended range for clustering cells is between 10 and 50}
+\item{number}{Number used to cluster cells, depending on the total number of cells, a recommended range for clustering cells is between 10 and 50}
 
-\item{output_path}{Path to save the metacell result}
+\item{output_path}{Path to save the Metacell result}
 
-\item{file_name}{File name of the metacell result}
+\item{file_name}{File name of the Metacell result}
 }
 \description{
-Grouped single cell into small clusters (referred to as metacell) using KNN graph partitions.
+Grouped single cell into small clusters (referred to as Metacell) using KNN graph partitions.
 }

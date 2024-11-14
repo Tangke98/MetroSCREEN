@@ -132,15 +132,26 @@ Generate_DiffCell_minicluster_for_Seurat<-function(Seurat_obj,CellNumber){
 }
 
 
-#' Grouped single cell into small clusters (referred to as metacell) using KNN graph partitions.
-
+#' Grouped single cell into small clusters (referred to as Metacell) using KNN graph partitions.
+#' 
 #' @param object Seurat object
-#' @param feature Feature used to cluster cells, usually use the colnames of the meta.data of the seurat object 
-#' @param number Number used to cluster cells, depending on your total number of cells, a recommended range for clustering cells is between 10 and 50
-#' @param output_path Path to save the metacell result
-#' @param file_name File name of the metacell result
-
+#' @param feature Feature used to cluster cells, usually choose the colnames from the meta.data of the Seurat object  
+#' @param number Number used to cluster cells, depending on the total number of cells, a recommended range for clustering cells is between 10 and 50
+#' @param output_path Path to save the Metacell result
+#' @param file_name File name of the Metacell result
+#' 
+#' @import Seurat
+#' @import dplyr
+#' @import tidyr
+#' @import ggplot2
+#' @import ggpubr
+#' @import tidyr
+#' @import GSVA
+#' @import ComplexHeatmap
+#' @import RColorBrewer
+#' 
 #' @export
+#' 
 make_metacell=function(object, feature, number, output_path,file_name){
     metacell=paste0(output_path,file_name,'.rds')
     metacell_info=paste0(output_path,file_name,'_info.rds')

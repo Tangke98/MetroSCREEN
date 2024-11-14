@@ -1,4 +1,0 @@
-{
-  "esbonio.sphinx.buildOnSave": true,
-  "esbonio.sphinx.project": "你的项目名称"  // 可选
-}

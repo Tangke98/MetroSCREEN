@@ -2,21 +2,21 @@
 % Please edit documentation in R/analysis.r
 \name{doheatmap_feature}
 \alias{doheatmap_feature}
-\title{Do the heatmap to show the difference.}
+\title{Draw the heatmap to show the difference.}
 \usage{
-doheatmap_feature(object, cluster, feature, width, height)
+doheatmap_feature(object, sample_info, feature, width, height, cols)
 }
 \arguments{
-\item{object}{A seurat object.}
+\item{object}{A matrix, the row is the MetaModule and the column is the samples/Metacells/cell, the value is the MetaModule score}
 
-\item{cluster}{Info to cluster the cells.}
+\item{sample_info}{A vector including ample information for the samples/Metacells/cells}
 
-\item{feature}{Feature to show.}
+\item{feature}{Feature to show}
 
-\item{width}{Width of the figure.}
+\item{width}{Width of the figure}
 
-\item{height}{Height of the figure.}
+\item{height}{Height of the figure}
 }
 \description{
-Do the heatmap to show the difference.
+Draw the heatmap to show the difference.
 }

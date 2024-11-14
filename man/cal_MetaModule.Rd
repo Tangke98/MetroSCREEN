@@ -2,19 +2,21 @@
 % Please edit documentation in R/cal_MetaModule_score.r
 \name{cal_MetaModule}
 \alias{cal_MetaModule}
-\title{Calculate the MetaModule score for each metacell.}
+\title{Calculate the MetaModule score for each single cell/Metacell/Sample.}
 \usage{
-cal_MetaModule(object, module_list, output_path, file_name)
+cal_MetaModule(object, module_list, output_path, file_name, parallel = 20)
 }
 \arguments{
-\item{object}{A matrix, the row is the gene and the column is the sample/metacell, the value is the expression.}
+\item{object}{A matrix, the rows are genes and the columns are the samples/Metacells/cells, the value is the expression}
 
-\item{module_list}{Reaction list or interested gene sets.}
+\item{module_list}{Metabolic reaction list or interested gene sets}
 
-\item{output_path}{Path to save the MetaModule score result.}
+\item{output_path}{Path to save the MetaModule score result}
 
-\item{file_name}{File name of the MetaModule score result.}
+\item{file_name}{File name of the MetaModule score result}
+
+\item{parallel}{The parallel size to process data}
 }
 \description{
-Calculate the MetaModule score for each metacell.
+Calculate the MetaModule score for each single cell/Metacell/Sample.
 }

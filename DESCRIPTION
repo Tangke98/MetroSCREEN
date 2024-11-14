@@ -1,12 +1,16 @@
 Package: MetroSCREEN
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Single-cell CRIPSR Screens Data Processing and Analysis
+Version: 0.91
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person(given = "Ke",
+           family = "Tang",
+           role = c("aut", "cre"),
+           email = "cocot@tongji.edu.cn")
+Description: MetroSCREEN(Pan-cancer single-cell metabolism and regulatory analyses) is an innovative method designed to infer metabolic states and their associated regulators from both bulk and single-cell transcriptomic data.  
+Imports: Seurat, dplyr, tidyr, ggplot2, ggpubr, GSVA, ComplexHeatmap, RColorBrewer, nichenetr, limma, rPref, kpcalg, igraph, RobustRankAggreg, parallel, ggraph, reshape2
+Depends: Seurat, dplyr, tidyr, ggplot2, ggpubr, GSVA, ComplexHeatmap, RColorBrewer, nichenetr, limma, rPref, kpcalg, igraph, RobustRankAggreg, parallel, ggraph, reshape2
+License: GPL-3
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1

@@ -1,6 +1,13 @@
 package:
-  name: MetroSCREEN
+  name: metroscreen
   version: "0.1.0"
+  
+channels:
+  - conda-forge
+  - bioconda
+  - liulab-dfci
+  - bioturing
+  - defaults
 
 source:
   path: /fs/home/tangke/metabolism/tool/MetroSCREEN
@@ -8,31 +15,53 @@ source:
 build:
   number: 0
   preserve_egg_dir: True
+  script: |
+    Rscript install_missing_packages.r
 
 requirements:
   build:
-    - r-base
+    - python <3.9
+    - setuptools
+    - r-base >=4.1.3
+    - r-seurat>=4.3.0, <5.0.0
     - r-devtools
-  host:
-    - r-base
-    - r-roxygen2
+    - lisa2
+    - r-dplyr
+    - r-tidyr
+    - r-ggplot2
+    - r-ggpubr
+    - r-rcolorbrewer
+    - r-rpref
+    - r-igraph
+    - r-robustrankaggreg
+    - r-ggraph
+    - r-reshape2
+    - bioconductor-rbgl
+    - bioconductor-gsva
+    - bioconductor-complexheatmap
+    - bioconductor-limma
   run:
-    - r-base
-    - bioconductor-gsva>=1.42.0
-    - r-dplyr>=1.0.9
-    - r-tidyr>=1.2.0
-    - r-ggplot2>=3.3.6
-    - r-ggpubr>=0.4.0
-    - bioconductor-limma>=3.50.1
-    - r-igraph>=1.3.2
-    - r-harmony>=1.2.0
-    - r-seurat>=4.3.0
-    - bioconductor-gsva>=1.42.0
-    - bioconductor-complexheatmap>=2.10.0
-    - r-rcolorbrewer>=1.1_3
-    - r-rpref>=1.3
-    - r-igraph>=1.6.0
-    - r-robustrankaggreg>=1.2
+    - python >=3.8
+    - r-base >=4.1.3
+    - r-seurat>=4.3.0, <5.0.0
+    - r-devtools
+    - lisa2
+    - r-dplyr
+    - r-tidyr
+    - r-ggplot2
+    - r-ggpubr
+    - r-rcolorbrewer
+    - r-rpref
+    - r-igraph
+    - r-robustrankaggreg
+    - r-ggraph
+    - r-reshape2
+    - bioconductor-rbgl
+    - bioconductor-gsva
+    - bioconductor-complexheatmap
+    - bioconductor-limma
+    
+    
 
 about:
   home: https://github.com/Tangke98/MetroSCREEN

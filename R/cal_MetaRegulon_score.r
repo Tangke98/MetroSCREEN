@@ -1,21 +1,41 @@
-#' Get the date of the state, using for the MetaRegulon analysis
-
-#' @param object A seurat object
-#' @param feature Feature used to cluster cells, usually use the colnames of the meta.data of the seurat object 
-#' @param state State of the interested cell types pr metabolic state
-#' @param interested_MM
-#' @param MM_list
-#' @param markers
-#' @param lisa_file
-#' @param ligand_target_matrix
-#' @param lr_network
-#' @param sample_tech
-#' @param output_path Path to save the metacell result
-#' @param RP_path
-#' @param file_name File name of the metacell result
+#' Calculate the MetaRegulon score for each MetaModule in cell subtypes/metabolic subgtypes/sample conditions.
+#' 
+#' @param object A Seurat object
+#' @param feature The feature used to cluster cells, typically chosen from the column names of the meta.data in the Seurat object 
+#' @param state The cell subtype, metabolic subtype, or sample condition
+#' @param interested_MM The name of the metabolic reaction or interested gene set
+#' @param MM_list A list of metabolic reactions or interested gene sets
+#' @param markers Marker genes enriched in the corresponding state
+#' @param lisa_file The path to the LISA results for the marker genes
+#' @param ligand_target_matrix The path to the ligand-target matrix (provided)
+#' @param lr_network The ligand-receptor network matrix (provided)
+#' @param sample_tech The technology used for sequencing
+#' @param output_path The path to save the MetaRegulon results
+#' @param RP_path The RP results (provided)
+#' @param file_name The file name for the MetaRegulon results
+#' 
+#' @import Seurat
+#' @import dplyr
+#' @import tidyr
+#' @import ggplot2
+#' @import nichenetr
+#' @import ggpubr
+#' @import GSVA
+#' @import ComplexHeatmap
+#' @import limma
+#' @import RColorBrewer
+#' @import rPref
+#' @import kpcalg
+#' @import igraph
+#' @import RobustRankAggreg
+#' @import parallel
+#' @import ggraph
+#' @import reshape2
+#' 
 #' @export
 
 cal_MetaRegulon=function(object,feature,state,interested_MM,MM_list,markers,lisa_file,ligand_target_matrix,lr_network,sample_tech,output_path,RP_path,file_name){
+    RP_score=readRDS(RP_path)
     tmp_dir <- file.path(output_path,file_name)
     if (!dir.exists(tmp_dir)) {
         dir.create(tmp_dir)
@@ -41,33 +61,23 @@ cal_MetaRegulon=function(object,feature,state,interested_MM,MM_list,markers,lisa
     }
     cl <- makeCluster(3) ## only three functions,set to 3
     clusterExport(cl,
-                  list("output_path", "file_name", "state", "file_res", "markers",'lisa_file',"MM_list", "interested_MM",'RP_path','ligand_target_matrix','lr_network',
+                  list("output_path", "file_name", "state", "file_res", "markers",'lisa_file',"MM_list", "interested_MM",'RP_score','ligand_target_matrix','lr_network',
                        "get_cor",'cal_tf_score','cal_target_score',
                        "gene_gene_interaction", "ligand_target_interaction",'tr_target_interaction'),envir = environment())
     clusterEvalQ(cl, {
         suppressMessages({
-            library(harmony)
-            library(Seurat)
-            library(dplyr)
-            library(tidyr)
-            library(ggplot2)
-            library('nichenetr')
-            library(ggpubr)
-            library(GSVA)
-            library(MAESTRO)
-            library(ComplexHeatmap)
-            library(limma)
-            library(RColorBrewer)
-            library(rPref) 
-            library(kpcalg)
-            library(igraph)
-            library(RobustRankAggreg)
-            library(parallel)
+            libraries <- c("Seurat", "dplyr", "tidyr", "ggplot2",
+                        "nichenetr", "ggpubr", "GSVA", 
+                        "ComplexHeatmap", "limma", "RColorBrewer",
+                        "rPref", "igraph", "RobustRankAggreg", "parallel",
+                        "MetroSCREEN", "reshape2")
+            lapply(libraries, library, character.only = TRUE)
+            # source('/fs/home/tangke/metabolism/tool/MetroSCREEN/R/kpc.r')
         })
     })
     tasks <- list(gene_gene_task = list(fun = 'gene_gene_interaction', args = list(output_path,file_name,file_res,MM_list,interested_MM)),
                   ligand_target_task = list(fun = 'ligand_target_interaction', args = list(output_path,file_name,state,file_res,markers,MM_list,interested_MM,ligand_target_matrix,lr_network)),
-                  tr_target_task = list(fun = 'tr_target_interaction', args = list(output_path,file_name,lisa_file,file_res,RP_path,MM_list,interested_MM))
+                  tr_target_task = list(fun = 'tr_target_interaction', args = list(output_path,file_name,lisa_file,file_res,RP_score,MM_list,interested_MM))
                  )
     results <- parLapply(cl, tasks, function(task) {
         tryCatch({
@@ -91,9 +101,10 @@ cal_MetaRegulon=function(object,feature,state,interested_MM,MM_list,markers,lisa
 }
 
 #' cal_tf_score
-
+#' 
 #' @param tf 
 #' @param data 
+#' 
 #' @export
 
 cal_tf_score=function(tf,data){
@@ -107,29 +118,33 @@ cal_tf_score=function(tf,data){
 }
 
 #' cal_target_score
-
+#' 
 #' @param lisa_res_in_metroscreen A seurat object
 #' @param factor Feature used to cluster cells, usually use the colnames of the meta.data of the seurat object 
 #' @param data State of the interested cell types pr metabolic state
-#' @param RP_path
+#' @param RP_score
+#' 
 #' @export
 
-cal_target_score=function(lisa_res_in_metroscreen,factor,data,RP_path){
+cal_target_score=function(lisa_res_in_metroscreen,factor,data,RP_score){
     sample_id=lisa_res_in_metroscreen[lisa_res_in_metroscreen$factor==factor,'sample_id'][1] 
     if (nchar(sample_id)>2){
         dir_id=substring(sample_id,1,3)
     }else{
         dir_id='000'
     }
-    tf_target=read.table(paste0(RP_path,dir_id,'/',sample_id,'_gene_score.txt'))
-    tf_target_use=tf_target[!duplicated(tf_target$V7),]
-    target=tf_target_use[tf_target_use$V5>2,'V7']
+    
+    tf_target=RP_score[,c('gene',paste0(dir_id,'.',sample_id,'_gene_score.txt'))]
+    target=tf_target[tf_target[,2]>2,'gene']
+    
     if (length(target)<500){
-        tf_target_use_order=tf_target_use[order(tf_target_use$V5,decreasing = TRUE) & tf_target_use$V5>0,]
+        tf_target_use_order=tf_target[order(tf_target[,2],decreasing = TRUE),]
+        tf_target_use_order=tf_target_use_order[tf_target_use_order[,2]>0,]
+
         if (nrow(tf_target_use_order>=500)){
-            target=tf_target_use_order[1:500,'V7']
+            target=tf_target_use_order[1:500,'gene']
         }else{
-            target=tf_target_use_order[,'V7']
+            target=tf_target_use_order[,'gene']
         }
     }
     
@@ -148,11 +163,12 @@ cal_target_score=function(lisa_res_in_metroscreen,factor,data,RP_path){
 }
 
 #' get_cor
-
+#' 
 #' @param cor
 #' @param MM_list 
 #' @param MM_index 
 #' @param class
+#' 
 #' @export
 
 get_cor=function(cor,MM_list,MM_index,class){
@@ -183,12 +199,13 @@ get_cor=function(cor,MM_list,MM_index,class){
 }
 
 #' gene_gene_interaction
-
+#' 
 #' @param output_path 
 #' @param file_name 
 #' @param file_res 
 #' @param MM_list
 #' @param interested_MM
+#' 
 #' @export
 
 gene_gene_interaction=function(output_path,file_name,file_res,MM_list,interested_MM){
@@ -212,7 +229,7 @@ gene_gene_interaction=function(output_path,file_name,file_res,MM_list,interested
 }
 
 #' ligand_target_interaction
-
+#' 
 #' @param output_path 
 #' @param file_name 
 #' @param state 
@@ -222,6 +239,7 @@ gene_gene_interaction=function(output_path,file_name,file_res,MM_list,interested
 #' @param interested_MM
 #' @param ligand_target_matrix
 #' @param lr_network
+#' 
 #' @export
 
 ligand_target_interaction=function(output_path,file_name,state,file_res,markers,MM_list,interested_MM,ligand_target_matrix,lr_network){
@@ -272,17 +290,18 @@ ligand_target_interaction=function(output_path,file_name,state,file_res,markers,
 }
 
 #' tr_target_interaction
-
+#' 
 #' @param output_path
 #' @param file_name
 #' @param lisa_file 
 #' @param file_res
-#' @param RP_path
+#' @param RP_score
 #' @param MM_list
 #' @param interested_MM
+#' 
 #' @export
 
-tr_target_interaction=function(output_path,file_name,lisa_file,file_res,RP_path,MM_list,interested_MM){
+tr_target_interaction=function(output_path,file_name,lisa_file,file_res,RP_score,MM_list,interested_MM){
     cat("Starting tr_target_interaction\n")
     ## get the tr activity
     tr_activity_res=paste0(output_path,file_name,"/",file_name,":tr_activity.rds")
@@ -298,8 +317,8 @@ tr_target_interaction=function(output_path,file_name,lisa_file,file_res,RP_path,
     #                                                 data=data) ## tf target score
         
         cl <- makeCluster(20)
-        clusterExport(cl, c("cal_target_score", "lisa_res_in_metroscreen", "data",'RP_path'),envir = environment())
-        cal_target_score_res <- parLapply(cl, as.list(colnames(M_TR)), cal_target_score,lisa_res_in_metroscreen=lisa_res_in_metroscreen, data=as.data.frame(data),RP_path=RP_path)
+        clusterExport(cl, c("cal_target_score", "lisa_res_in_metroscreen", "data",'RP_score'),envir = environment())
+        cal_target_score_res <- parLapply(cl, as.list(colnames(M_TR)), cal_target_score,lisa_res_in_metroscreen=lisa_res_in_metroscreen, data=as.data.frame(data),RP_score=RP_score)
         M_Target=Reduce(function(x,y){cbind(x,y)},cal_target_score_res)
         stopCluster(cl)
         
@@ -337,7 +356,7 @@ tr_target_interaction=function(output_path,file_name,lisa_file,file_res,RP_path,
 }
 
 #' get_causal
-
+#' 
 #' @param data
 #' @param tr_activity
 #' @param lr_activity 
@@ -346,6 +365,7 @@ tr_target_interaction=function(output_path,file_name,lisa_file,file_res,RP_path,
 #' @param pathway_index
 #' @param times
 #' @param factor_class
+#' 
 #' @export
 
 get_causal <- function(data, tr_activity, lr_activity, factor, MM_list, pathway_index, times, factor_class) {
@@ -401,7 +421,7 @@ get_causal <- function(data, tr_activity, lr_activity, factor, MM_list, pathway_
 }
 
 #' repref_each
-
+#' 
 #' @param tr_cor
 #' @param tr_activity 
 #' @param lr_activity 
@@ -412,6 +432,7 @@ get_causal <- function(data, tr_activity, lr_activity, factor, MM_list, pathway_
 #' @param data
 #' @param output_path
 #' @param file_name
+#' 
 #' @export
 
 repref_each=function(tr_cor,tr_activity,lr_activity,ligand_cor,gene_cor,pathway_index,MM_list,data,output_path,file_name){
@@ -473,23 +494,13 @@ repref_each=function(tr_cor,tr_activity,lr_activity,ligand_cor,gene_cor,pathway_
                         clusterExport(cl, c("get_causal", "data", "tr_activity", "lr_activity", "MM_list", "pathway_index", "times"),envir = environment())
                         clusterEvalQ(cl, {
                             suppressMessages({
-                                library(harmony)
-                                library(Seurat)
-                                library(dplyr)
-                                library(tidyr)
-                                library(ggplot2)
-                                library('nichenetr')
-                                library(ggpubr)
-                                library(GSVA)
-                                library(MAESTRO)
-                                library(ComplexHeatmap)
-                                library(limma)
-                                library(RColorBrewer)
-                                library(rPref) 
-                                library(kpcalg)
-                                library(igraph)
-                                library(RobustRankAggreg)
-                                library(parallel)
+                                libraries <- c( "Seurat", "dplyr", "tidyr", "ggplot2",
+                                            "nichenetr", "ggpubr", "GSVA", 
+                                            "ComplexHeatmap", "limma", "RColorBrewer",
+                                            "rPref", "igraph", "RobustRankAggreg", "parallel",
+                                            "MetroSCREEN", "reshape2")
+                                lapply(libraries, library, character.only = TRUE)
+                                # source('/fs/home/tangke/metabolism/tool/MetroSCREEN/R/kpc.r')
                             })
                         })
                         factor_tf_res <- do.call(rbind, parLapply(cl, factor_tf, function(factor){
@@ -508,23 +519,13 @@ repref_each=function(tr_cor,tr_activity,lr_activity,ligand_cor,gene_cor,pathway_
                         clusterExport(cl, c("get_causal", "data", "tr_activity", "lr_activity", "MM_list", "pathway_index", "times"),envir = environment())
                         clusterEvalQ(cl, {
                             suppressMessages({
-                                library(harmony)
-                                library(Seurat)
-                                library(dplyr)
-                                library(tidyr)
-                                library(ggplot2)
-                                library('nichenetr')
-                                library(ggpubr)
-                                library(GSVA)
-                                library(MAESTRO)
-                                library(ComplexHeatmap)
-                                library(limma)
-                                library(RColorBrewer)
-                                library(rPref) 
-                                library(kpcalg)
-                                library(igraph)
-                                library(RobustRankAggreg)
-                                library(parallel)
+                                libraries <- c( "Seurat", "dplyr", "tidyr", "ggplot2",
+                                            "nichenetr", "ggpubr", "GSVA", 
+                                            "ComplexHeatmap", "limma", "RColorBrewer",
+                                            "rPref", "igraph", "RobustRankAggreg", "parallel",
+                                            "MetroSCREEN", "reshape2")
+                                lapply(libraries, library, character.only = TRUE)
+                                # source('/fs/home/tangke/metabolism/tool/MetroSCREEN/R/kpc.r')
                             })
                         })
                         factor_gg_res <- do.call(rbind, parLapply(cl, factor_gg, function(factor){
@@ -543,23 +544,13 @@ repref_each=function(tr_cor,tr_activity,lr_activity,ligand_cor,gene_cor,pathway_
                         clusterExport(cl, c("get_causal", "data", "tr_activity", "lr_activity", "MM_list", "pathway_index", "times"),envir = environment())
                         clusterEvalQ(cl, {
                             suppressMessages({
-                                library(harmony)
-                                library(Seurat)
-                                library(dplyr)
-                                library(tidyr)
-                                library(ggplot2)
-                                library('nichenetr')
-                                library(ggpubr)
-                                library(GSVA)
-                                library(MAESTRO)
-                                library(ComplexHeatmap)
-                                library(limma)
-                                library(RColorBrewer)
-                                library(rPref) 
-                                library(kpcalg)
-                                library(igraph)
-                                library(RobustRankAggreg)
-                                library(parallel)
+                                libraries <- c("Seurat", "dplyr", "tidyr", "ggplot2",
+                                            "nichenetr", "ggpubr", "GSVA",
+                                            "ComplexHeatmap", "limma", "RColorBrewer",
+                                            "rPref", "igraph", "RobustRankAggreg", "parallel",
+                                            "MetroSCREEN", "reshape2")
+                                lapply(libraries, library, character.only = TRUE)
+                                # source('/fs/home/tangke/metabolism/tool/MetroSCREEN/R/kpc.r')
                             })
                         })
                         factor_lr_autocrine_res <- do.call(rbind, parLapply(cl, factor_lr_autocrine, function(factor){

@@ -1,12 +1,32 @@
 
-#' Do the heatmap to show the difference.
-
-#' @param object A matrix, the row is the MetaModule and the column is the sample/metacell, the value is the MetaModule score.
-#' @param sample_info A vector including ample information for the sample/metacell.
-#' @param feature Feature to show.
-#' @param width Width of the figure.
-#' @param height Height of the figure.
+#' Draw the heatmap to show the difference.
+#' 
+#' @param object A matrix, the row is the MetaModule and the column is the samples/Metacells/cell, the value is the MetaModule score
+#' @param sample_info A vector including ample information for the samples/Metacells/cells
+#' @param feature Feature to show
+#' @param width Width of the figure
+#' @param height Height of the figure
+#' 
+#' @import Seurat
+#' @import dplyr
+#' @import tidyr
+#' @import ggplot2
+#' @import nichenetr
+#' @import ggpubr
+#' @import GSVA
+#' @import ComplexHeatmap
+#' @import limma
+#' @import RColorBrewer
+#' @import rPref
+#' @import kpcalg
+#' @import igraph
+#' @import RobustRankAggreg
+#' @import parallel
+#' @import ggraph
+#' @import reshape2
+#' 
 #' @export
+#' 
 
 doheatmap_feature=function(object,sample_info,feature,width,height,cols){
     cluster_info <- sort(sample_info)
@@ -34,10 +54,29 @@ doheatmap_feature=function(object,sample_info,feature,width,height,cols){
 
 
 #' Find the differentially enriched MetaModule.
-
-#' @param object A matrix, the row is the MetaModule and the column is the sample/metacell, the value is the MetaModule score.
-#' @param sample_info A vector including ample information for the sample/metacell.
+#' 
+#' @param object A matrix, the row is the MetaModule and the column is the  samples/Metacells/cell, the value is the MetaModule score
+#' @param sample_info A vector including ample information for the  samples/Metacells/cell
 #' @param sample_tech scRNA or bulk.
+#' 
+#' @import Seurat
+#' @import dplyr
+#' @import tidyr
+#' @import ggplot2
+#' @import nichenetr
+#' @import ggpubr
+#' @import GSVA
+#' @import ComplexHeatmap
+#' @import limma
+#' @import RColorBrewer
+#' @import rPref
+#' @import kpcalg
+#' @import igraph
+#' @import RobustRankAggreg
+#' @import parallel
+#' @import ggraph
+#' @import reshape2
+#' 
 #' @export
 
 FindAllMarkers_MetaModule=function(object,sample_info,sample_tech){
