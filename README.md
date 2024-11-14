@@ -1,7 +1,5 @@
 # MetroSCREEN
 
-![Documentation Status](https://readthedocs.org/projects/MetroSCREEN/badge/?version=latest)
-
 Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data.
 
 MetroSCREEN is a computational tool designed to deduce metabolic states (MetaModule function) and identify upstream extrinsic and intrinsic regulators (MetaRegulon function) that influence dysregulated metabolic reactions, utilizing either scRNA-seq or bulk data.
