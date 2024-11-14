@@ -17,7 +17,11 @@ Step 1 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
+=======
+Here we utilized the metabolic reactions and corresponding information provided by `Recon3 <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here 修改`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
+>>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
 
 .. code-block:: r
    
@@ -46,6 +50,7 @@ Here we utilized the metabolic reactions and corresponding information provided 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this section, MetroSCREEN calculates the MetaModule score for each sample by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each group in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./CCLE/` folder.
+<<<<<<< HEAD
 
 .. code-block:: r
    expression<-readRDS('./CCLE/ccle.rds')
@@ -59,6 +64,23 @@ In this section, MetroSCREEN calculates the MetaModule score for each sample by 
 
 .. code-block:: r
 
+=======
+
+.. code-block:: r
+
+   ## Calculate the MetaModule score
+   cal_MetaModule(metacell,MM,'./CCLE/','ccle_gsva')
+   ccle.gsva=readRDS('./CCLE/ccle_gsva.rds')
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.  MetaModule score exploration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After the MetaModule calculation, users can explore the MetaModule score. To identify differentially enriched MetaModules for each group in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_. 
+
+.. code-block:: r
+
+>>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    ## Read the sample information object for each sample
    sample_info<-readRDS('./CCLE/ccle_meta.rds')
 
@@ -130,7 +152,11 @@ Find the marker genes for each group, this is the basis for MetaRegulon activity
 .. code-block:: r
 
    ## Read sample expression and group information
+<<<<<<< HEAD
    expression<-readRDS('./CCLE/ccle.rds')
+=======
+   expression_use<-readRDS('./CCLE/ccle.rds')
+>>>>>>> 9ac74753829a22f8c9e94e57768463c31040f3a8
    sample_info<-readRDS('./CCLE/ccle_meta.rds')
 
    ## Considering the TPM format for the expression data, the limma package was utilized. If the expression is raw count, please use the DESeq2 package
