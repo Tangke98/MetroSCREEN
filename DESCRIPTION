@@ -7,10 +7,30 @@ Authors@R:
            role = c("aut", "cre"),
            email = "cocot@tongji.edu.cn")
 Description: MetroSCREEN(Pan-cancer single-cell metabolism and regulatory analyses) is an innovative method designed to infer metabolic states and their associated regulators from both bulk and single-cell transcriptomic data.  
-Imports: Seurat, dplyr, tidyr, ggplot2, ggpubr, GSVA, ComplexHeatmap, RColorBrewer, nichenetr, limma, rPref, kpcalg, igraph, RobustRankAggreg, parallel, ggraph, reshape2
-Depends: Seurat, dplyr, tidyr, ggplot2, ggpubr, GSVA, ComplexHeatmap, RColorBrewer, nichenetr, limma, rPref, kpcalg, igraph, RobustRankAggreg, parallel, ggraph, reshape2
+Imports: 
+    Seurat (>= 4.3.0), 
+    dplyr, 
+    tidyr, 
+    ggplot2, 
+    ggpubr, 
+    GSVA, 
+    ComplexHeatmap, 
+    RColorBrewer, 
+    nichenetr, 
+    limma, 
+    rPref, 
+    kpcalg, 
+    igraph, 
+    RobustRankAggreg, 
+    parallel, 
+    ggraph, 
+    reshape2
+
+Depends: 
+    r-base (>= 4.1.3)
+SystemRequirements: Seurat >= 4.3.0 and < 5.0.0
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.1.2
