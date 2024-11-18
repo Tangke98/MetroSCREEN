@@ -11,7 +11,9 @@ Additional_repositories:
     https://bioconductor.org/packages/release/bioc,
     https://bioconductor.org/packages/release/data/annotation
 Remotes:
-    saeyslab/nichenetr
+    saeyslab/nichenetr,
+    cran/MASS@7.3-60,
+    cran/Matrix@1.6-5
 Imports: 
     MASS (<= 7.3-60),
     Matrix (< 1.7),
