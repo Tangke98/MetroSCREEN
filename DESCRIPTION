@@ -23,7 +23,6 @@ Imports:
     GSVA, 
     ComplexHeatmap, 
     RColorBrewer, 
-    nichenetr, 
     limma, 
     rPref, 
     kpcalg, 
