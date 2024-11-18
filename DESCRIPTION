@@ -13,12 +13,12 @@ Additional_repositories:
 Remotes:
     saeyslab/nichenetr
 Imports: 
-    Seurat (>= 4.3.0), 
+    Seurat (>= 4.3.0, < 5.0), 
     dplyr, 
     tidyr, 
     ggplot2, 
     ggpubr, 
-    GSVA, 
+    GSVA (< 1.52), 
     ComplexHeatmap, 
     RColorBrewer, 
     nichenetr, 
