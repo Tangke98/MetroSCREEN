@@ -13,6 +13,8 @@ Additional_repositories:
 Remotes:
     saeyslab/nichenetr
 Imports: 
+    MASS (<= 7.3-60),
+    Matrix (< 1.7),
     Seurat,
     dplyr, 
     tidyr, 
