@@ -8,7 +8,8 @@ Authors@R:
            email = "cocot@tongji.edu.cn")
 Description: MetroSCREEN(Pan-cancer single-cell metabolism and regulatory analyses) is an innovative method designed to infer metabolic states and their associated regulators from both bulk and single-cell transcriptomic data. 
 Additional_repositories: 
-    https://bioconductor.org/packages/release/bioc
+    https://bioconductor.org/packages/release/bioc,
+    https://bioconductor.org/packages/release/data/annotation
 Remotes:
     saeyslab/nichenetr
 Imports: 
