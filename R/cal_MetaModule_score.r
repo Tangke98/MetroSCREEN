@@ -26,9 +26,10 @@ cal_MetaModule=function(object, module_list, output_path, file_name,parallel=20)
             dir.create(tmp_dir)
         }
         if (length(module_list) > 20){
-            group_indices <- cut(seq_along(module_list), breaks=seq(1, length(module_list), by=20), labels=FALSE)
-            # split the module
-            sublists <- split(module_list, group_indices)
+            # group_indices <- cut(seq_along(module_list), breaks=seq(1, length(module_list), by=20), labels=FALSE)
+            # # split the module
+            # sublists <- split(module_list, group_indices)
+            sublists <- split(module_list, ceiling(seq_along(module_list) / 20))
             for (i in 1:length(sublists)){
                 MM_use = sublists[[i]]
                 output_name_use = paste0(file_name, "_", names(sublists[i]))
@@ -58,9 +59,10 @@ cal_MetaModule=function(object, module_list, output_path, file_name,parallel=20)
             dir.create(tmp_dir)
         }
         if (length(module_list) > 100){
-            group_indices <- cut(seq_along(module_list), breaks=seq(1, length(module_list), by=100), labels=FALSE)
-            # split the module
-            sublists <- split(module_list, group_indices)
+            # group_indices <- cut(seq_along(module_list), breaks=seq(1, length(module_list), by=100), labels=FALSE)
+            # # split the module
+            # sublists <- split(module_list, group_indices)
+            sublists <- split(module_list, ceiling(seq_along(module_list) / 20))
             for (i in 1:length(sublists)){
                 MM_use = sublists[[i]]
                 output_name_use = paste0(file_name, "_", names(sublists[i]))
