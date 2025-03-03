@@ -8,11 +8,7 @@ MetroSCREEN(RNA-seq)
 
 For bulk RNA-seq data, MetroSCREEN calculates the MetaModule score for each sample and constructs a MetaRegulon for each dysregulated MetaModule, offering insights into the mechanisms of metabolic regulation. Additionally, MetroSCREEN identifies the sources of the MetaRegulons. Given that several samples may not be suitable for inferring causation between MetaModules and MetaRegulons, directions for bulk RNA-seq data are not provided.
 
-<<<<<<< HEAD
-To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk RNA-seq data, we downloaded the dataset from `here <https://zenodo.org/uploads/14160398>`_.
-=======
 To demonstrate how the MetaModule and MetaRegulon functions of MetroSCREEN are used with bulk RNA-seq data, we have provided a demo dataset available `here <https://zenodo.org/uploads/14160398>`_.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 Step 1 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -21,11 +17,7 @@ Step 1 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
-=======
 We utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we have provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
    
@@ -53,11 +45,7 @@ We utilized the metabolic reactions and corresponding information provided by `R
 2. Calculate the MetaModule score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-In this section, MetroSCREEN calculates the MetaModule score for each sample by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each group in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./CCLE/` folder.
-=======
 In this section, MetroSCREEN calculates the MetaModule score for each sample using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each group in the experimental design, we use the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to employ similar parameters. The results from :bash:`cal_MetaModule` will be stored in the :bash:`./CCLE/` folder.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
    

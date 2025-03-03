@@ -5,24 +5,14 @@
 
 MetroSCREEN(scRNA-seq)
 ---------------------------------
-<<<<<<< HEAD
-For single-cell data, to mitigate the impact of technical noise and increase gene coverage, MetroSCREEN adopts a Metacell strategy similar to `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. MetroSCREEN calculates the MetaModule score for each Metacell and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon for the MetaModule.
-
-To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk scRNA-seq data, we downloaded the dataset from `here <https://zenodo.org/uploads/14160398>`_.
-=======
 For single-cell data, MetroSCREEN calculates the MetaModule score for each cell and then builds a MetaRegulon for the dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon for the MetaModule.
 
 To demonstrate how the MetaModule and MetaRegulon functions of MetroSCREEN are used with scRNA-seq data, we have provided a demo dataset available `here <https://zenodo.org/uploads/14160398>`_. 
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 Step 1 Prepare the Metacell (Optional)
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-<<<<<<< HEAD
-MetroSCREEN adopts a Metacell strategy using :bash:`make_Metacell` function. The number of cells in a Metacell depends on the total number of cells. If the total exceeds 3000, the recommended number of cells per Metacell is 30. For smaller cell populations, users can set a lower number of cells per Metacell, but it better not be less than 10.
-=======
 If users wish to achieve better results and save time, MetroSCREEN offers a Metacell strategy using the :bash:`make_Metacell` function to mitigate the impact of technical noise and increase gene coverage. More detailed information about this strategy can be found in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. The number of cells in a Metacell depends on the total cell count. If the total exceeds 3,000, the recommended number of cells per Metacell is 30. For smaller cell populations, users can set a lower number of cells per Metacell, but it should not be less than 10.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -96,11 +86,7 @@ After obtaining the Metacell object, users can analyze the Metacells expression 
    :width: 50%
    :align: center
 
-<<<<<<< HEAD
-If there is a batch effect in the data, it is recommended to construct the Metacells separately for each dataset, and then combine the Metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
-=======
 If batch effects are present in the data, it is recommended to construct Metacells separately for each dataset and then combine them. Subsequently, remove the batch effects before proceeding with downstream analysis. The recommended workflow for batch effect removal can be found in the `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 Step 2 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -109,11 +95,7 @@ Step 2 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest.
-=======
 We utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. As some of this information is duplicated, we have provided a simplified version. Users can download it `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users may manually create and use their own gene sets of interest.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -139,11 +121,7 @@ We utilized the metabolic reactions and corresponding information provided by `R
 2. Calculate the MetaModule score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-In this section, MetroSCREEN calculates the MetaModule score for each Metacell by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtypes in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
-=======
 In this section, MetroSCREEN calculates the MetaModule score for each Metacell/cell using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtype in the experimental design, we employ the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN. This function is analogous to the :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to apply similar parameters. The results from :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -183,11 +161,7 @@ In this section, MetroSCREEN calculates the MetaModule score for each Metacell/c
 4. Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<<<<<<< HEAD
-Here, we give two examples for the following analysis, users can also explore more by add the MetaModule score to the :bash:`meta.data` slot of the :bash:`Metacell.seurat` object.
-=======
 Here, we provide two examples for subsequent analysis, although users can explore further by adding the MetaModule score to the :bash:`meta.data` slot of the :bash:`Metacell.seurat` object.
->>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
