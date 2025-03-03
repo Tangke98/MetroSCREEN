@@ -5,14 +5,24 @@
 
 MetroSCREEN(scRNA-seq)
 ---------------------------------
+<<<<<<< HEAD
 For single-cell data, to mitigate the impact of technical noise and increase gene coverage, MetroSCREEN adopts a Metacell strategy similar to `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. MetroSCREEN calculates the MetaModule score for each Metacell and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon for the MetaModule.
 
 To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk scRNA-seq data, we downloaded the dataset from `here <https://zenodo.org/uploads/14160398>`_.
+=======
+For single-cell data, MetroSCREEN calculates the MetaModule score for each cell and then builds a MetaRegulon for the dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the direction and source of the MetaRegulon for the MetaModule.
 
-Step 1 Prepare the Metacell
+To demonstrate how the MetaModule and MetaRegulon functions of MetroSCREEN are used with scRNA-seq data, we have provided a demo dataset available `here <https://zenodo.org/uploads/14160398>`_. 
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
+
+Step 1 Prepare the Metacell (Optional)
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+<<<<<<< HEAD
 MetroSCREEN adopts a Metacell strategy using :bash:`make_Metacell` function. The number of cells in a Metacell depends on the total number of cells. If the total exceeds 3000, the recommended number of cells per Metacell is 30. For smaller cell populations, users can set a lower number of cells per Metacell, but it better not be less than 10.
+=======
+If users wish to achieve better results and save time, MetroSCREEN offers a Metacell strategy using the :bash:`make_Metacell` function to mitigate the impact of technical noise and increase gene coverage. More detailed information about this strategy can be found in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_. The number of cells in a Metacell depends on the total cell count. If the total exceeds 3,000, the recommended number of cells per Metacell is 30. For smaller cell populations, users can set a lower number of cells per Metacell, but it should not be less than 10.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -61,7 +71,7 @@ After obtaining the Metacell object, users can analyze the Metacells expression 
 
 .. code-block:: r
 
-   ## Create Seurat object for Metacell expression matrix
+   ## Create Seurat object for Metacell/cell expression matrix
    Metacell.seurat <- CreateSeuratObject(counts = Metacell, project = "Metacell", min.cells = 0, min.features = 0)
 
    ## Normalize data
@@ -82,11 +92,15 @@ After obtaining the Metacell object, users can analyze the Metacells expression 
 
    DimPlot(Metacell.seurat, reduction = "umap",group.by='cell_type',cols=c('SMC'='#8DD3C7','MYH11+ Pericyte'='#FCCDE5','Pericyte'='#BEBADA','COL11A1+ CAF'='#FB8072','ADH1B+ CAF'='#80B1D3','BCHE+ SMC'='#FDB462'))+ggtitle("Metacell cell subtype")
 
-.. image:: ../_static/img/MetroSCREEN_cell_annotation_Metacell.png
+.. image:: ../_static/img/MetroSCREEN_cell_annotation_metacell.png
    :width: 50%
    :align: center
 
+<<<<<<< HEAD
 If there is a batch effect in the data, it is recommended to construct the Metacells separately for each dataset, and then combine the Metacells. After that, remove the batch effect and proceed with downstream analysis. The recommended workflow for batch effect removal is available in `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
+=======
+If batch effects are present in the data, it is recommended to construct Metacells separately for each dataset and then combine them. Subsequently, remove the batch effects before proceeding with downstream analysis. The recommended workflow for batch effect removal can be found in the `TabulaTIME <https://github.com/wanglabtongji/TabulaTiME>`_ framework.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 Step 2 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -95,7 +109,11 @@ Step 2 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest.
+=======
+We utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. As some of this information is duplicated, we have provided a simplified version. Users can download it `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users may manually create and use their own gene sets of interest.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -121,7 +139,11 @@ Here we utilized the metabolic reactions and corresponding information provided 
 2. Calculate the MetaModule score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 In this section, MetroSCREEN calculates the MetaModule score for each Metacell by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtypes in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
+=======
+In this section, MetroSCREEN calculates the MetaModule score for each Metacell/cell using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each cell subtype in the experimental design, we employ the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN. This function is analogous to the :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to apply similar parameters. The results from :bash:`cal_MetaModule` will be stored in the :bash:`./scRNA/` folder.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -161,7 +183,11 @@ In this section, MetroSCREEN calculates the MetaModule score for each Metacell b
 4. Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 Here, we give two examples for the following analysis, users can also explore more by add the MetaModule score to the :bash:`meta.data` slot of the :bash:`Metacell.seurat` object.
+=======
+Here, we provide two examples for subsequent analysis, although users can explore further by adding the MetaModule score to the :bash:`meta.data` slot of the :bash:`Metacell.seurat` object.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
 
@@ -191,7 +217,7 @@ In our fibroblast integration data, we found that CTHRC1+ CAFs showed higher Met
 Step 3 MetaRegulon analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-MetroSCREEN systematically considers the combined effects of intrinsic cellular drivers and extrinsic environmental factors of metabolic regulation.
+MetroSCREEN systematically analyzes the combined effects of intrinsic cellular drivers and extrinsic environmental factors on metabolic regulation.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 1. Prepare the essential files
@@ -208,7 +234,7 @@ Find the marker genes for each cell subtype, this is the basis for MetaRegulon a
    Metacell.seurat.markers=Metacell.seurat.markers[order(Metacell.seurat.markers$avg_log2FC,decreasing = TRUE),]
    saveRDS(Metacell.seurat.markers,'./scRNA/fibro_new_Metacell_gene_markers.rds')
 
-Prepare the Lisa results for each group. This is the basis for MetaRegulon TR activity calculation. Users can known more about Lisa `here <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6>`_.
+Prepare the Lisa results for each group, as these are essential for calculating MetaRegulon TR activity. Users can learn more about Lisa `here <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6>`_.
 
 .. code-block:: r
 
@@ -236,14 +262,14 @@ Prepare the Lisa results for each group. This is the basis for MetaRegulon TR ac
 2. Calculate the MetaRegulon score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The MetaRegulon for MetaModule can be inferred by :bash:`cal_MetaRegulon` function. MetroSCREEN used a four-step strategy to infer the MetaRegulon.
-The first step is to infer the activity of the MetaRegulon.
+The MetaRegulon for a MetaModule can be inferred using the :bash:`cal_MetaRegulon` function. MetroSCREEN employs a four-step strategy to deduce the MetaRegulon:
+Inferring the activity of the MetaRegulon is the first step.
 
-The second step involves correlating MetaRegulon activity with the expression of genes within MetaModule. We consider the highest correlation value among the genes in a MetaModule to represent the interaction between the MetaRegulon and the MetaModule. 
+Correlating MetaRegulon activity with gene expression within the MetaModule constitutes the second step. We consider the highest correlation value among the genes in a MetaModule as representative of the interaction between the MetaRegulon and the MetaModule. 
 
-The third step involves a multi-objective optimization method to determine which MetaRegulon is most likely to control the MetaModule.
+Using a multi-objective optimization method to determine the most likely MetaRegulon to control the MetaModule is the third step.
 
-The fourth step involves inferring causation between the MetaModule and MetaRegulon by using PC based method.
+Inferring causation between the MetaModule and MetaRegulon using a PC-based method is the fourth step.
 
 
 .. code-block:: r
@@ -281,7 +307,7 @@ Calculate the MetaRegulon score
 
    cal_MetaRegulon(object,feature,state,interested_MM,MM_list,markers,lisa_file,ligand_target_matrix,lr_network,sample_tech,output_path,RP_score,file_name)
 
-The results of :bash:`cal_MetaRegulon` will be stored in the :bash:`./scRNA/COL11A1_CAF/` floder, and the detailed information are shown as below.
+The results of the :bash:`cal_MetaRegulon` function will be stored in the :bash:`./scRNA/COL11A1_CAF/` floder, and the detailed information is shown below.
 
 +-----------------------------------------------------------------------------------------------------------------------------------+
 | File                                          | Description                                                                       |

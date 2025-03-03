@@ -1,9 +1,5 @@
 # MetroSCREEN
 
-![PyPI](https://img.shields.io/pypi/v/MetroSCREEN)
-![Downloads](https://pepy.tech/badge/MetroSCREEN)
-![Documentation Status](https://readthedocs.org/projects/MetroSCREEN/badge/?version=latest)
-
 Metabolite and their associated extrinsic and intrinsic regulators screening based on transcriptomic data.
 
 MetroSCREEN is a computational tool designed to deduce metabolic states (MetaModule function) and identify upstream extrinsic and intrinsic regulators (MetaRegulon function) that influence dysregulated metabolic reactions, utilizing either scRNA-seq or bulk data.
@@ -19,10 +15,9 @@ MetroSCREEN is a computational tool designed to deduce metabolic states (MetaMod
 
 ## Install MetroSCREEN
 ```bash
-devtools::install_github('wanglabtongji/MetroSCREEN')
+conda install tangke::metroscreen
 ```
 ## Installation of Other Dependencies
-Install the osqp package for optimization using install.packages('osqp'), If you encounter any issue during MetroSCREEN installation.
 Install the dplyr package using install.packages('dplyr').
 For single cell data analysis, we provide pipeline to work with Seurat(Seurat V4). Please install Seurat package by install.packages('Seurat').
 

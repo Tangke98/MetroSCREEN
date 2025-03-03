@@ -6,9 +6,13 @@
 MetroSCREEN(RNA-seq)
 ---------------------------------
 
-For bulk RNA-seq data, MetroSCREEN calculates the MetaModule score for each sample and then builds a MetaRegulon for each dysregulated MetaModule, which provides insights into the mechanisms of metabolic regulation. Besides, MetroSCREEN delineates the source of the MetaRegulon. Considering that several samples are not suitable to infer the causation between MetaModule and MetaRegulon, the direction for bulk RNA-seq data is not provided. 
+For bulk RNA-seq data, MetroSCREEN calculates the MetaModule score for each sample and constructs a MetaRegulon for each dysregulated MetaModule, offering insights into the mechanisms of metabolic regulation. Additionally, MetroSCREEN identifies the sources of the MetaRegulons. Given that several samples may not be suitable for inferring causation between MetaModules and MetaRegulons, directions for bulk RNA-seq data are not provided.
 
+<<<<<<< HEAD
 To demonstrate the usage of the MetaModule and MetaRegulon function of MetroSCREEN in bulk RNA-seq data, we downloaded the dataset from `here <https://zenodo.org/uploads/14160398>`_.
+=======
+To demonstrate how the MetaModule and MetaRegulon functions of MetroSCREEN are used with bulk RNA-seq data, we have provided a demo dataset available `here <https://zenodo.org/uploads/14160398>`_.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 Step 1 MetaModule analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -17,7 +21,11 @@ Step 1 MetaModule analysis
 1. Prepare the metabolic information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 Here we utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
+=======
+We utilized the metabolic reactions and corresponding information provided by `Recon3D <https://www.nature.com/articles/nbt.4072>`_. Since some of this information is duplicated, we have provided a simplified version. Users can download it from `here <https://zenodo.org/uploads/14160223>`_. Alternatively, users can manually create and use gene sets of interest. We recommend that both the treatment and control groups contain at least three sets of data.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
    
@@ -45,7 +53,11 @@ Here we utilized the metabolic reactions and corresponding information provided 
 2. Calculate the MetaModule score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+<<<<<<< HEAD
 In this section, MetroSCREEN calculates the MetaModule score for each sample by using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each group in the experimental design, the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN will be used. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to use similar parameters. The results of :bash:`cal_MetaModule` will be stored in the :bash:`./CCLE/` folder.
+=======
+In this section, MetroSCREEN calculates the MetaModule score for each sample using :bash:`cal_MetaModule` function. To identify differentially enriched MetaModules for each group in the experimental design, we use the :bash:`FindAllMarkers_MetaModule` function from MetroSCREEN. This function is similar to the  :bash:`FindAllMarkers` function in `Seurat <https://satijalab.org/seurat/>`_, allowing users to employ similar parameters. The results from :bash:`cal_MetaModule` will be stored in the :bash:`./CCLE/` folder.
+>>>>>>> 125c37f630056dfdb8fa9ea6632b7cd83801e1af
 
 .. code-block:: r
    
@@ -105,7 +117,7 @@ Here, we give two examples for the following analysis.
    :width: 50%
    :align: center
 
-If users are interested in a specific pathway and want to identify the detailed reactions that differentiate various groups, they can exclusively set the pathways.
+If users are interested in a specific pathway and wish to identify the detailed reactions that differentiate various groups, they can exclusively configure the pathways.
 
 .. code-block:: r
 
@@ -120,13 +132,13 @@ If users are interested in a specific pathway and want to identify the detailed 
 Step 2 MetaRegulon analysis
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-MetroSCREEN systematically considers the combined effects of intrinsic cellular drivers and extrinsic environmental factors of metabolic regulation.
+MetroSCREEN systematically considers the combined effects of intrinsic cellular drivers and extrinsic environmental factors on metabolic regulation.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 1. Prepare the essential files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Find the marker genes for each group, this is the basis for MetaRegulon activity calculation.
+To find the marker genes for each group, which is essential for calculating MetaRegulon activity, use the following approach.
 
 .. code-block:: r
 
@@ -149,7 +161,7 @@ Find the marker genes for each group, this is the basis for MetaRegulon activity
    DE_genes=DE_genes[order(abs(DE_genes$logFC),decreasing = TRUE),]
    saveRDS(DE_genes,'./CCLE/ccle_gene_markers.rds')
 
-Prepare the Lisa results for each group. This is the basis for MetaRegulon TR activity calculation. Users can known more about Lisa `here <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6>`_.
+Prepare the Lisa results for each group, as these are essential for calculating MetaRegulon TR activity. Users can learn more about Lisa `here <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-1934-6>`_.
 
 .. code-block:: r
 
@@ -176,14 +188,15 @@ Prepare the Lisa results for each group. This is the basis for MetaRegulon TR ac
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 2. Calculate the MetaRegulon score
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The MetaRegulon for MetaModule can be inferred by :bash:`cal_MetaRegulon` function. MetroSCREEN used a four-step strategy to infer the MetaRegulon.
-The first step is to infer the activity of the MetaRegulon.
 
-The second step involves correlating MetaRegulon activity with the expression of genes within MetaModule. We consider the highest correlation value among the genes in a MetaModule to represent the interaction between the MetaRegulon and the MetaModule. 
+The MetaRegulon for a MetaModule can be inferred using the :bash:`cal_MetaRegulon` function. MetroSCREEN employs a four-step strategy to deduce the MetaRegulon:
+Inferring the activity of the MetaRegulon is the first step.
 
-The third step involves a multi-objective optimization method to determine which MetaRegulon is most likely to control the MetaModule.
+Correlating MetaRegulon activity with gene expression within the MetaModule constitutes the second step. We consider the highest correlation value among the genes in a MetaModule as representative of the interaction between the MetaRegulon and the MetaModule.
 
-The fourth step involves inferring causation between the MetaModule and MetaRegulon by using PC based method.
+Using a multi-objective optimization method to determine the most likely MetaRegulon to control the MetaModule is the third step.
+
+Inferring causation between the MetaModule and MetaRegulon using a PC-based method is the fourth step.
 
 .. code-block:: r
 
@@ -220,7 +233,7 @@ Calculate the MetaRegulon score
 
    cal_MetaRegulon(object,feature,state,interested_MM,MM_list,markers,lisa_file,ligand_target_matrix,lr_network,sample_tech,output_path,RP_path,file_name)
 
-The results of :bash:`cal_MetaRegulon` will be stored in the :bash:`./CCLE/HNSC/` floder, and the detailed information are shown as below.
+The results of the :bash:`cal_MetaRegulon` function will be stored in the :bash:`./CCLE/HNSC/` floder, and the detailed information is shown below.
 
 +-----------------------------------------------------------------------------------------------------------------------------------+
 | File                                          | Description                                                                       |
@@ -240,11 +253,12 @@ The results of :bash:`cal_MetaRegulon` will be stored in the :bash:`./CCLE/HNSC/
 | ./MetaRegulon/{file_name}:*.txt               | The MetaRegulon results.                                                          |
 +-----------------------------------------------+-----------------------------------------------------------------------------------+
 
-It should be noted that since there is no interaction between individual samples, ligands calculated in bulk RNA-seq data are mainly the result of autocrine.
+It should be noted that since there is no interaction between individual samples, the ligands calculated in bulk RNA-seq data are mainly the result of autocrine signaling.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 3. Downstream analysis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Resources of MetaRegulon.
 
 .. code-block:: r
