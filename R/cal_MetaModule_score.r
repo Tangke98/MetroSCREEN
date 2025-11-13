@@ -44,12 +44,14 @@ cal_MetaModule=function(object, module_list, output_path, file_name,parallel=20)
                 return(data)
             }
             merge_res = do.call(rbind, lapply(as.list(files), merge))
+            merge_res <- dedup_by_row_max(merge_res)
             saveRDS(merge_res, paste0(output_path, file_name, '.rds'))
             unlink(tmp_dir, recursive = TRUE)
         } else {
             gsva <- gsva(object, module_list, method = "gsva", 
                         min.sz = 1, max.sz = 500, kcdf = "Gaussian", mx.diff = TRUE, 
                         verbose = TRUE, parallel.sz = parallel)
+            gsva <- dedup_by_row_max(gsva)
             saveRDS(gsva, paste0(output_path, file_name, ".rds"))
         }
 
@@ -77,12 +79,14 @@ cal_MetaModule=function(object, module_list, output_path, file_name,parallel=20)
                 return(data)
             }
             merge_res = do.call(rbind, lapply(as.list(files), merge))
+            merge_res <- dedup_by_row_max(merge_res)
             saveRDS(merge_res, paste0(output_path, file_name, '.rds'))
             unlink(tmp_dir, recursive = TRUE)
         } else {
             gsva <- gsva(object, module_list, method = "gsva", 
                         min.sz = 1, max.sz = 500, kcdf = "Gaussian", mx.diff = TRUE, 
                         verbose = TRUE, parallel.sz = parallel)
+            gsva <- dedup_by_row_max(gsva)
             saveRDS(gsva, paste0(output_path, file_name, ".rds"))
         }
         
@@ -90,8 +94,20 @@ cal_MetaModule=function(object, module_list, output_path, file_name,parallel=20)
         gsva <- gsva(object, module_list, method = "gsva", 
                      min.sz = 1, max.sz = 500, kcdf = "Gaussian", mx.diff = TRUE, 
                      verbose = TRUE, parallel.sz = parallel)
+        gsva <- dedup_by_row_max(gsva)
         saveRDS(gsva, paste0(output_path, file_name, ".rds"))
     }
 }
-test
+dedup_by_row_max <- function(mat) {
+  rn <- rownames(mat)
+  mat_max <- do.call(
+    rbind,
+    lapply(split(as.data.frame(mat), rn), function(x) {
+      apply(x, 2, max, na.rm = TRUE)
+    })
+  )
+
+  as.matrix(mat_max)
+}
+
 
